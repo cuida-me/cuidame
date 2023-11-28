@@ -1,5 +1,6 @@
 import 'package:cuidame/app/data/providers/dependences/home.dart';
 import 'package:cuidame/app/data/providers/dependences/medication.dart';
+import 'package:cuidame/app/data/providers/dependences/patient.dart';
 import 'package:cuidame/app/data/providers/dependences/repository.dart';
 import 'package:cuidame/app/data/providers/dependences/start.dart';
 import 'package:get/get.dart';
@@ -35,5 +36,6 @@ class DependencesInjector {
     setupRepositoryInjections();
     setupHomeInjections();
     setupMedicationInjections();
+    setupPatientInjections();
   }
 }
