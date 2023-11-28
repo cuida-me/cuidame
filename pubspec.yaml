@@ -1,0 +1,96 @@
+name: cuidame
+description: A new Flutter project.
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.1.4 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  get: ^4.6.6
+  firebase_core: ^2.21.0
+  firebase_auth: ^4.12.1
+  uni_links: ^0.5.1
+  intl: ^0.18.1
+  flutter_localizations:
+      sdk: flutter
+  http: ^1.1.0
+  flutter_dotenv: ^5.1.0
+  simple_camera: ^1.0.2+1
+  image_picker: ^1.0.4
+  permission_handler: ^11.0.1
+  mobile_scanner: ^3.5.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.1
+  flutter_launcher_icons: ^0.13.1
+  flutter_native_splash: ^2.3.5
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "dev_assets/icon.png"
+  adaptive_icon_background: "#20D0CE"
+  adaptive_icon_foreground: "dev_assets/icon_adaptive.png"
+
+flutter_native_splash:
+  color: "#20D0CE"
+  color_dark: "#20D0CE"
+  image: dev_assets/splash_icon.png
+  android: true
+  ios: true
+
+  android_12:
+    image: dev_assets/splash_icon.png
+    icon_background_color: "#20D0CE"
+    icon_background_color_dark: "#20D0CE"
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/
+    - assets/mock/
+    - .env
+    - .env.dev
+
+fonts:
+    - family: SFProDisplay
+      fonts:
+        - asset: fonts/SFPRODISPLAYBLACKITALIC.OTF
+          weight: 900
+        - asset: fonts/SFPRODISPLAYBOLD.OTF
+          weight: 800
+        - asset: fonts/SFPRODISPLAYMEDIUM.OTF
+          weight: 700
+        - asset: fonts/SFPRODISPLAYREGULAR.OTF
+          weight: 500
+        - asset: fonts/SFPRODISPLAYLIGHTITALIC.OTF
+          weight: 400
+        - asset: fonts/SFPRODISPLAYULTRALIGHTITALIC.OTF
+          weight: 300
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  

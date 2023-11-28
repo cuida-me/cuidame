@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "562142309292",
+    "project_id": "cuidame-67f4d",
+    "storage_bucket": "cuidame-67f4d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:562142309292:android:42521fdc825b5689176809",
+        "android_client_info": {
+          "package_name": "com.cuidame.cuidame"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdZCD6eB9jcI2Fo67XXE3kxuMOc9D9oMg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

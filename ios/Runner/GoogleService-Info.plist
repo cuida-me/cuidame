@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyB9iDHJn3kzYIkxe9BgTbrAK_pAdCOyTpI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>562142309292</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.cuidame.cuidame</string>
+	<key>PROJECT_ID</key>
+	<string>cuidame-67f4d</string>
+	<key>STORAGE_BUCKET</key>
+	<string>cuidame-67f4d.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:562142309292:ios:b1541f97bfdc748e176809</string>
+</dict>
+</plist>
