@@ -1,8 +1,12 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:cuidame/app/configs/constants/toast_type.dart';
 import 'package:cuidame/app/configs/theme/app_theme_style.dart';
 import 'package:cuidame/app/data/providers/dependences_injector.dart';
+import 'package:cuidame/app/data/services/local_notification_service.dart';
 import 'package:cuidame/app/data/services/user_login_service.dart';
 import 'package:cuidame/app/router/router.dart';
 import 'package:cuidame/app/router/routes.dart';
+import 'package:cuidame/app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/route_manager.dart';
@@ -28,8 +32,31 @@ class App extends StatelessWidget {
       theme: AppTheme.themeData,
       routes: CustomRouter.routes,
       initialRoute: Routes.start,
-      onInit: () {
+      onInit: () async {
         DependencesInjector.get<UserLoginService>();
+        DependencesInjector.get<LocalNotificationSchedulingService>();
+
+        final receiveAction = await AwesomeNotifications().getInitialNotificationAction();
+        if (receiveAction?.channelKey == 'teste') {
+          Utils.toast('Notification Initialize', 'body', ToastType.success);
+        }
+
+        AwesomeNotifications().createNotification(
+          content: NotificationContent(
+            id: 20,
+            channelKey: 'teste',
+            title: 'Hora do remedinho',
+            body: 'Remedio para ficar fortinho',
+            // fullScreenIntent: true,
+            wakeUpScreen: true,
+            category: NotificationCategory.Alarm,
+          ),
+          schedule: NotificationCalendar.fromDate(
+            date: DateTime.now().add(const Duration(seconds: 5)),
+            allowWhileIdle: true,
+            preciseAlarm: true,
+          ),
+        );
       },
       builder: (context, child) {
         return ScrollConfiguration(

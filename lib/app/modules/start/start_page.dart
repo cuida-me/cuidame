@@ -1,6 +1,8 @@
 import 'package:cuidame/app/configs/app_assets.dart';
 import 'package:cuidame/app/configs/constants/spacements.dart';
 import 'package:cuidame/app/configs/theme/app_color_style.dart';
+import 'package:cuidame/app/data/providers/dependences_injector.dart';
+import 'package:cuidame/app/modules/start/controllers/start_controller.dart';
 import 'package:cuidame/app/router/routes.dart';
 import 'package:cuidame/app/shared/widgets/circle_button.dart';
 import 'package:cuidame/app/shared/widgets/primary_button.dart';
@@ -8,9 +10,15 @@ import 'package:cuidame/app/shared/widgets/safe_scroll_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class StartPage extends StatelessWidget {
+class StartPage extends StatefulWidget {
   const StartPage({super.key});
 
+  @override
+  State<StartPage> createState() => _StartPageState();
+}
+
+class _StartPageState extends State<StartPage> {
+  final controller = DependencesInjector.get<StartController>();
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
