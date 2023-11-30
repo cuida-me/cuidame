@@ -1,9 +1,10 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:cuidame/app/configs/constants/toast_type.dart';
 import 'package:cuidame/app/utils/utils.dart';
+import 'package:cuidame/app/utils/utils_notification.dart';
 
-class LocalNotificationSchedulingService {
-  LocalNotificationSchedulingService() {
+class LocalNotificationService {
+  LocalNotificationService() {
     _initialize();
     AwesomeNotifications().isNotificationAllowed().then((isAllowed) async {
       if (!isAllowed) {
@@ -30,11 +31,19 @@ class LocalNotificationSchedulingService {
 
   void _initialize() {
     AwesomeNotifications().setListeners(
-      onActionReceivedMethod: LocalNotificationSchedulingService.onActionReceivedMethod,
-      onNotificationCreatedMethod: LocalNotificationSchedulingService.onNotificationCreatedMethod,
-      onNotificationDisplayedMethod: LocalNotificationSchedulingService.onNotificationDisplayedMethod,
-      onDismissActionReceivedMethod: LocalNotificationSchedulingService.onDismissActionReceivedMethod,
+      onActionReceivedMethod: LocalNotificationService.onActionReceivedMethod,
+      onNotificationCreatedMethod: LocalNotificationService.onNotificationCreatedMethod,
+      onNotificationDisplayedMethod: LocalNotificationService.onNotificationDisplayedMethod,
+      onDismissActionReceivedMethod: LocalNotificationService.onDismissActionReceivedMethod,
     );
+    onNotificationInitialMethod();
+  }
+
+  static Future<void> onNotificationInitialMethod() async {
+    final receiveAction = await AwesomeNotifications().getInitialNotificationAction();
+    if (receiveAction?.channelKey == 'teste') {
+      Utils.toast('Notification Initialize', 'body', ToastType.success);
+    }
   }
 
   /// Use this method to detect when a new notification or a schedule is created
@@ -65,5 +74,24 @@ class LocalNotificationSchedulingService {
     Utils.toast('Action Received', 'body', ToastType.info);
 
     // Navigate into pages, avoiding to open the notification details page over another details page already opened
+  }
+
+  Future<bool> createNotificationSchedulingMedication(
+      int id, String title, String body, DateTime datetimeScheduling) async {
+    return await AwesomeNotifications().createNotification(
+      content: NotificationContent(
+        id: id,
+        channelKey: UtilsNotification.channelKeySchedulingMedication,
+        title: title,
+        body: body,
+        wakeUpScreen: true,
+        category: NotificationCategory.Alarm,
+      ),
+      schedule: NotificationCalendar.fromDate(
+        date: datetimeScheduling,
+        allowWhileIdle: true,
+        preciseAlarm: true,
+      ),
+    );
   }
 }

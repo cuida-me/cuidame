@@ -14,8 +14,8 @@ void setupStartInjections() {
     () => UserLoginService(),
   );
 
-  DependencesInjector.registerLazySingleton<LocalNotificationSchedulingService>(
-    () => LocalNotificationSchedulingService(),
+  DependencesInjector.registerLazySingleton<LocalNotificationService>(
+    () => LocalNotificationService(),
   );
 
   DependencesInjector.registerFactory<HttpClient>(
