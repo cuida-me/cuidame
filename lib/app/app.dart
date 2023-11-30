@@ -29,9 +29,16 @@ class App extends StatelessWidget {
       theme: AppTheme.themeData,
       routes: CustomRouter.routes,
       initialRoute: Routes.start,
-      onInit: () async {
+      onInit: () {
         DependencesInjector.get<UserLoginService>();
         DependencesInjector.get<LocalNotificationService>();
+
+        // notificationService.createNotificationSchedulingMedication(
+        //   1,
+        //   'Teste',
+        //   'Body',
+        //   DateTime.now().add(const Duration(seconds: 3)),
+        // );
       },
       builder: (context, child) {
         return ScrollConfiguration(

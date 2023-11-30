@@ -1,35 +1,63 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:cuidame/app/configs/constants/toast_type.dart';
+import 'package:cuidame/app/router/routes.dart';
 import 'package:cuidame/app/utils/utils.dart';
 import 'package:cuidame/app/utils/utils_notification.dart';
+import 'package:get/route_manager.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class LocalNotificationService {
+  final _notificationPermissionList = <NotificationPermission>[
+    NotificationPermission.Alert,
+    NotificationPermission.Sound,
+    NotificationPermission.Badge,
+    NotificationPermission.Vibration,
+    NotificationPermission.Light,
+    NotificationPermission.OverrideDnD,
+    NotificationPermission.PreciseAlarms,
+    NotificationPermission.CriticalAlert,
+    NotificationPermission.Car,
+    NotificationPermission.FullScreenIntent,
+  ];
+
+  PermissionStatus? _statusNotificationPermission;
+
   LocalNotificationService() {
-    _initialize();
-    AwesomeNotifications().isNotificationAllowed().then((isAllowed) async {
-      if (!isAllowed) {
-        // This is just a basic example. For real apps, you must show some
-        // friendly dialog box before call the request method.
-        // This is very important to not harm the user experience
-        final allow = await AwesomeNotifications().requestPermissionToSendNotifications(
-          channelKey: 'teste',
-          permissions: [
-            NotificationPermission.Alert,
-            NotificationPermission.Sound,
-            NotificationPermission.Badge,
-            NotificationPermission.Vibration,
-            NotificationPermission.Light,
-            NotificationPermission.OverrideDnD,
-            NotificationPermission.PreciseAlarms,
-            NotificationPermission.CriticalAlert,
-          ],
-        );
-        print('Notification is allowed: $allow');
-      }
-    });
+    checkPermission();
   }
 
-  void _initialize() {
+  PermissionStatus get statusNotificationPermission => _statusNotificationPermission ?? PermissionStatus.denied;
+
+  Future<bool> checkPermission() async {
+    _statusNotificationPermission = await Permission.notification.request();
+
+    switch (_statusNotificationPermission) {
+      case PermissionStatus.denied:
+        Get.offAllNamed(Routes.notificationPermission);
+        break;
+      case PermissionStatus.permanentlyDenied:
+        Get.offAllNamed(Routes.notificationPermission);
+        break;
+      default:
+        _initializeNotifications();
+        break;
+    }
+
+    return _statusNotificationPermission == PermissionStatus.granted;
+  }
+
+  Future openSettings() async {
+    return openAppSettings();
+  }
+
+  Future checkPermissionSendNotification() async {
+    await AwesomeNotifications().requestPermissionToSendNotifications(
+      channelKey: UtilsNotification.channelKeySchedulingMedication,
+      permissions: _notificationPermissionList,
+    );
+  }
+
+  void _initializeNotifications() {
     AwesomeNotifications().setListeners(
       onActionReceivedMethod: LocalNotificationService.onActionReceivedMethod,
       onNotificationCreatedMethod: LocalNotificationService.onNotificationCreatedMethod,
@@ -41,7 +69,7 @@ class LocalNotificationService {
 
   static Future<void> onNotificationInitialMethod() async {
     final receiveAction = await AwesomeNotifications().getInitialNotificationAction();
-    if (receiveAction?.channelKey == 'teste') {
+    if (receiveAction?.channelKey == UtilsNotification.channelKeySchedulingMedication) {
       Utils.toast('Notification Initialize', 'body', ToastType.success);
     }
   }
@@ -77,21 +105,31 @@ class LocalNotificationService {
   }
 
   Future<bool> createNotificationSchedulingMedication(
-      int id, String title, String body, DateTime datetimeScheduling) async {
-    return await AwesomeNotifications().createNotification(
-      content: NotificationContent(
-        id: id,
-        channelKey: UtilsNotification.channelKeySchedulingMedication,
-        title: title,
-        body: body,
-        wakeUpScreen: true,
-        category: NotificationCategory.Alarm,
-      ),
-      schedule: NotificationCalendar.fromDate(
-        date: datetimeScheduling,
-        allowWhileIdle: true,
-        preciseAlarm: true,
-      ),
-    );
+    int id,
+    String title,
+    String body,
+    DateTime datetimeScheduling,
+  ) async {
+    if (statusNotificationPermission.isGranted) {
+      return await AwesomeNotifications().createNotification(
+        content: NotificationContent(
+          id: id,
+          channelKey: UtilsNotification.channelKeySchedulingMedication,
+          title: title,
+          body: body,
+          wakeUpScreen: true,
+          criticalAlert: true,
+          category: NotificationCategory.Alarm,
+        ),
+        schedule: NotificationCalendar.fromDate(
+          date: datetimeScheduling,
+          allowWhileIdle: true,
+          preciseAlarm: true,
+        ),
+      );
+    } else {
+      checkPermission();
+      return false;
+    }
   }
 }

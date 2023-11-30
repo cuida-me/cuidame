@@ -5,6 +5,7 @@ import 'package:cuidame/app/data/providers/dependences_injector.dart';
 import 'package:cuidame/app/utils/utils_notification.dart';
 import 'package:cuidame/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -31,7 +32,7 @@ void main() async {
       ),
     ],
     channelGroups: [],
-    debug: true,
+    debug: kDebugMode,
   );
 
   WidgetsFlutterBinding.ensureInitialized();
