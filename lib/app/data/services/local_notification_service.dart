@@ -30,7 +30,7 @@ class LocalNotificationService {
   PermissionStatus get statusNotificationPermission => _statusNotificationPermission;
   PermissionStatus get statusNotificationPolicyPermission => _statusNotificationPolicyPermission;
 
-  Future<bool> checkPermission() async {
+  Future checkPermission() async {
     _statusNotificationPermission = await Permission.notification.request();
 
     if (_statusNotificationPermission.isDenied || _statusNotificationPermission.isPermanentlyDenied) {
@@ -44,19 +44,17 @@ class LocalNotificationService {
     }
 
     _initializeNotifications();
-
-    return _statusNotificationPermission.isGranted && _statusNotificationPolicyPermission.isGranted;
   }
 
-  Future openSettings() async {
-    return openAppSettings();
+  Future<void> openSettings() async {
+    openAppSettings();
   }
 
-  Future openDoNotDisturbSettings() async {
+  Future<void> openDoNotDisturbSettings() async {
     _statusNotificationPolicyPermission = await Permission.accessNotificationPolicy.request();
   }
 
-  Future checkPermissionSendNotification() async {
+  Future<void> checkPermissionSendNotification() async {
     await AwesomeNotifications().requestPermissionToSendNotifications(
       channelKey: UtilsNotification.channelKeySchedulingMedication,
       permissions: _notificationPermissionList,

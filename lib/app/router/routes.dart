@@ -1,5 +1,6 @@
 class Routes {
-  static const start = '/';
+  static const init = '/';
+  static const start = '/start';
   static const signIn = '/signIn';
   static const register = '/register';
   static const confirmEmail = '/confirmEmail';

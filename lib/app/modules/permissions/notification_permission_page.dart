@@ -1,12 +1,15 @@
 import 'package:cuidame/app/configs/app_assets.dart';
 import 'package:cuidame/app/configs/constants/spacements.dart';
+import 'package:cuidame/app/configs/constants/toast_type.dart';
 import 'package:cuidame/app/configs/theme/app_color_style.dart';
 import 'package:cuidame/app/data/providers/dependences_injector.dart';
 import 'package:cuidame/app/data/services/local_notification_service.dart';
 import 'package:cuidame/app/shared/gutter.dart';
+import 'package:cuidame/app/shared/widgets/custom_app_bar.dart';
 import 'package:cuidame/app/shared/widgets/primary_button.dart';
+import 'package:cuidame/app/utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
+import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class NotificationPermissionPage extends StatefulWidget {
@@ -25,6 +28,19 @@ class _NotificationPermissionPageState extends State<NotificationPermissionPage>
         : 'Precisamos da permissão da notificação para que o app funcione de forma correta';
     return Scaffold(
       backgroundColor: AppColors.primary,
+      appBar: CustomAppBar(
+        context: context,
+        backgroundColor: AppColors.primary,
+        title: const Text('Voltar'),
+        transparent: true,
+        onTap: () {
+          if (notificationService.statusNotificationPermission.isGranted) {
+            Get.back();
+          } else {
+            Utils.toast('Permissão', 'Você precisa dar permissão de notificação', ToastType.warning);
+          }
+        },
+      ),
       body: SafeArea(
         child: Gutter(
           isSmall: true,
@@ -53,7 +69,7 @@ class _NotificationPermissionPageState extends State<NotificationPermissionPage>
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      'Permitir as notificações',
+                      'Permitir notificações',
                       style: Theme.of(context).textTheme.titleLarge,
                       textAlign: TextAlign.center,
                     ),
@@ -69,30 +85,18 @@ class _NotificationPermissionPageState extends State<NotificationPermissionPage>
                       height: 157,
                     ),
                     const SizedBox(height: Spacements.XL),
-                    if (notificationService.statusNotificationPermission.isDenied)
-                      PrimaryButton(
-                        onPressed: () {
-                          notificationService.checkPermission().then((value) {
-                            if (value) Get.back();
-                          });
-                        },
-                        text: 'Habilitar notificações',
-                        icon: Icons.notifications_outlined,
-                        expanded: true,
-                      ),
-                    if (notificationService.statusNotificationPermission.isPermanentlyDenied)
-                      PrimaryButton(
-                        onPressed: () {
-                          notificationService.openSettings().then((value) {
-                            notificationService.checkPermission().then((value) {
-                              if (value) Get.back();
-                            });
-                          });
-                        },
-                        text: 'Configurar permissão notificações',
-                        icon: Icons.settings_outlined,
-                        expanded: true,
-                      ),
+                    PrimaryButton(
+                      onPressed: () {
+                        if (notificationService.statusNotificationPermission.isDenied) {
+                          notificationService.checkPermission();
+                        } else {
+                          notificationService.openSettings();
+                        }
+                      },
+                      text: 'Habilitar notificações',
+                      icon: Icons.notifications_outlined,
+                      expanded: true,
+                    ),
                   ],
                 ),
               ),

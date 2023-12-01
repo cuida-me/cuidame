@@ -28,7 +28,7 @@ class App extends StatelessWidget {
       ],
       theme: AppTheme.themeData,
       routes: CustomRouter.routes,
-      initialRoute: Routes.start,
+      initialRoute: Routes.init,
       onInit: () {
         DependencesInjector.get<UserLoginService>();
         DependencesInjector.get<LocalNotificationService>();

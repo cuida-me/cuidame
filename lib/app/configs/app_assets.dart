@@ -1,4 +1,5 @@
 class AppAssets {
+  static const splashIcon = 'assets/splash_icon.png';
   static const logoIcon = 'assets/logo_icon.png';
   static const googleIcon = 'assets/google_icon.png';
 

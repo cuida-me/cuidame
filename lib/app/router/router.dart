@@ -5,6 +5,7 @@ import 'package:cuidame/app/modules/caregiver/patient_connect/patient_connect_pa
 import 'package:cuidame/app/modules/caregiver/patient_register/patient_register_page.dart';
 import 'package:cuidame/app/modules/confirm_email/confirm_email_page.dart';
 import 'package:cuidame/app/modules/forgot_password/forgot_password_page.dart';
+import 'package:cuidame/app/modules/init/init_page.dart';
 import 'package:cuidame/app/modules/patient/patient_qr_code/patient_qr_code_page.dart';
 import 'package:cuidame/app/modules/permissions/notification_permission_page.dart';
 import 'package:cuidame/app/modules/permissions/notification_policy_permission_page.dart';
@@ -17,6 +18,7 @@ import 'package:flutter/material.dart';
 
 class CustomRouter {
   static Map<String, WidgetBuilder> routes = {
+    Routes.init: (_) => const InitPage(),
     Routes.start: (_) => const StartPage(),
     Routes.signIn: (_) => const SignInPage(),
     Routes.register: (_) => const RegisterPage(),
