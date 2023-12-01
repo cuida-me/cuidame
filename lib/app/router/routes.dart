@@ -16,4 +16,5 @@ class Routes {
 
   // Permissions
   static const notificationPermission = '/notificationPermission';
+  static const notificationPolicyPermission = '/notificationPolicyPermission';
 }

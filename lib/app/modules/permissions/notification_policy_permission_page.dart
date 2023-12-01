@@ -7,22 +7,18 @@ import 'package:cuidame/app/shared/gutter.dart';
 import 'package:cuidame/app/shared/widgets/primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
-import 'package:permission_handler/permission_handler.dart';
 
-class NotificationPermissionPage extends StatefulWidget {
-  const NotificationPermissionPage({super.key});
+class NotificationPolicyPermissionPage extends StatefulWidget {
+  const NotificationPolicyPermissionPage({super.key});
 
   @override
-  State<NotificationPermissionPage> createState() => _NotificationPermissionPageState();
+  State<NotificationPolicyPermissionPage> createState() => _NotificationPolicyPermissionPageState();
 }
 
-class _NotificationPermissionPageState extends State<NotificationPermissionPage> {
+class _NotificationPolicyPermissionPageState extends State<NotificationPolicyPermissionPage> {
   final notificationService = DependencesInjector.get<LocalNotificationService>();
   @override
   Widget build(BuildContext context) {
-    final bodyText = notificationService.statusNotificationPermission.isPermanentlyDenied
-        ? 'Precisamos da permissão da notificação para que o app funcione de forma correta, para isso clique em configurações e habilite as notificações'
-        : 'Precisamos da permissão da notificação para que o app funcione de forma correta';
     return Scaffold(
       backgroundColor: AppColors.primary,
       body: SafeArea(
@@ -53,46 +49,34 @@ class _NotificationPermissionPageState extends State<NotificationPermissionPage>
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      'Permitir as notificações',
+                      'Permitir sobrepor o não pertube',
                       style: Theme.of(context).textTheme.titleLarge,
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: Spacements.S),
                     Text(
-                      bodyText,
+                      'Precisamos que habilite o aplicativo para sobrepor o não pertube quando necessário',
                       style: Theme.of(context).textTheme.bodyMedium,
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: Spacements.XL),
                     const Image(
-                      image: AssetImage(AppAssets.doNotDisturb),
+                      image: AssetImage(AppAssets.permissionNotification),
                       height: 157,
                     ),
                     const SizedBox(height: Spacements.XL),
-                    if (notificationService.statusNotificationPermission.isDenied)
-                      PrimaryButton(
-                        onPressed: () {
+                    PrimaryButton(
+                      onPressed: () {
+                        notificationService.openDoNotDisturbSettings().then((value) {
                           notificationService.checkPermission().then((value) {
                             if (value) Get.back();
                           });
-                        },
-                        text: 'Habilitar notificações',
-                        icon: Icons.notifications_outlined,
-                        expanded: true,
-                      ),
-                    if (notificationService.statusNotificationPermission.isPermanentlyDenied)
-                      PrimaryButton(
-                        onPressed: () {
-                          notificationService.openSettings().then((value) {
-                            notificationService.checkPermission().then((value) {
-                              if (value) Get.back();
-                            });
-                          });
-                        },
-                        text: 'Configurar permissão notificações',
-                        icon: Icons.settings_outlined,
-                        expanded: true,
-                      ),
+                        });
+                      },
+                      text: 'Configurar não pertube',
+                      icon: Icons.settings_outlined,
+                      expanded: true,
+                    ),
                   ],
                 ),
               ),

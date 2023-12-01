@@ -9,4 +9,5 @@ class AppAssets {
   static const downloadReport = 'assets/download_report.png';
   static const addMedication = 'assets/add_medication.png';
   static const permissionNotification = 'assets/permission_notification.png';
+  static const doNotDisturb = 'assets/do_not_disturb.png';
 }

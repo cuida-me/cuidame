@@ -20,34 +20,40 @@ class LocalNotificationService {
     NotificationPermission.FullScreenIntent,
   ];
 
-  PermissionStatus? _statusNotificationPermission;
+  late PermissionStatus _statusNotificationPermission;
+  late PermissionStatus _statusNotificationPolicyPermission;
 
   LocalNotificationService() {
     checkPermission();
   }
 
-  PermissionStatus get statusNotificationPermission => _statusNotificationPermission ?? PermissionStatus.denied;
+  PermissionStatus get statusNotificationPermission => _statusNotificationPermission;
+  PermissionStatus get statusNotificationPolicyPermission => _statusNotificationPolicyPermission;
 
   Future<bool> checkPermission() async {
     _statusNotificationPermission = await Permission.notification.request();
 
-    switch (_statusNotificationPermission) {
-      case PermissionStatus.denied:
-        Get.offAllNamed(Routes.notificationPermission);
-        break;
-      case PermissionStatus.permanentlyDenied:
-        Get.offAllNamed(Routes.notificationPermission);
-        break;
-      default:
-        _initializeNotifications();
-        break;
+    if (_statusNotificationPermission.isDenied || _statusNotificationPermission.isPermanentlyDenied) {
+      Get.toNamed(Routes.notificationPermission);
     }
 
-    return _statusNotificationPermission == PermissionStatus.granted;
+    _statusNotificationPolicyPermission = await Permission.accessNotificationPolicy.status;
+
+    if (_statusNotificationPolicyPermission.isDenied || _statusNotificationPolicyPermission.isPermanentlyDenied) {
+      Get.toNamed(Routes.notificationPolicyPermission);
+    }
+
+    _initializeNotifications();
+
+    return _statusNotificationPermission.isGranted && _statusNotificationPolicyPermission.isGranted;
   }
 
   Future openSettings() async {
     return openAppSettings();
+  }
+
+  Future openDoNotDisturbSettings() async {
+    _statusNotificationPolicyPermission = await Permission.accessNotificationPolicy.request();
   }
 
   Future checkPermissionSendNotification() async {
