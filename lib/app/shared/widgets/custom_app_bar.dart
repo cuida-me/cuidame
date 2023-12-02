@@ -6,15 +6,12 @@ class CustomAppBar extends AppBar {
   CustomAppBar(
       {super.key,
       required BuildContext context,
-      Color? backgroundColor,
-      double elevation = 0,
-      required Widget title,
+      super.backgroundColor,
+      double super.elevation = 0,
+      required Widget super.title,
       bool transparent = false,
       VoidCallback? onTap})
       : super(
-          backgroundColor: backgroundColor,
-          elevation: elevation,
-          title: title,
           centerTitle: false,
           titleTextStyle: Theme.of(context).textTheme.headlineSmall,
           iconTheme: const IconThemeData(

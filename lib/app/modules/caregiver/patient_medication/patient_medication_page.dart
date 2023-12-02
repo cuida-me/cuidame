@@ -33,7 +33,7 @@ class _PatientMedicationPageState extends State<PatientMedicationPage> {
                     schedulingDayModel: controller.schedules.value!,
                   ),
           ),
-          const SizedBox(height: Spacements.XL),
+          const SizedBox(height: Spacements.L),
           Expanded(
             child: Obx(() {
               if (controller.patient.value != null) return AddNewMedication(controller: controller);

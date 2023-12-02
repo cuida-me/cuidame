@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
-    Key? key,
+    super.key,
     this.title,
     this.hintText,
     this.password,
@@ -21,7 +21,7 @@ class CustomTextFormField extends StatelessWidget {
     this.maxLines,
     // this.maskFormatters,
     this.onlyNumber,
-  }) : super(key: key);
+  });
 
   final String? title;
   final String? hintText;

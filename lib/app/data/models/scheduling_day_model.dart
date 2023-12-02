@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:cuidame/app/data/models/scheduling_medication_type.dart';
+import 'package:cuidame/app/utils/utils_datetime.dart';
+
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class SchedulingDayModel {
   int day;
@@ -34,7 +37,7 @@ class SchedulingDayModel {
       day: map['day'] as int,
       dayName: map['day_name'] as String,
       monthName: map['month_name'] as String,
-      date: DateTime.tryParse(map['date'] as String),
+      date: UtilsDateTime.formatBrParse(map['date']),
       dayWeek: map['day_week'] as int,
       schedulings: List<SchedulingModel>.from(
         (map['schedulings'] as List<dynamic>).map<SchedulingModel>(
@@ -59,6 +62,7 @@ class SchedulingModel {
   int quantity;
   String status;
   String image;
+  SchedulingMedicationType type;
 
   SchedulingModel({
     required this.id,
@@ -69,6 +73,7 @@ class SchedulingModel {
     required this.quantity,
     required this.status,
     required this.image,
+    this.type = SchedulingMedicationType.inTime,
   });
 
   Map<String, dynamic> toMap() {
@@ -88,9 +93,8 @@ class SchedulingModel {
     return SchedulingModel(
       id: map['id'] as String,
       name: map['name'] as String,
-      medicationTime: map['medication_time'] != null ? DateTime.tryParse(map['medication_time'] as String) : null,
-      medicationTakenTime:
-          map['medication_taken_time'] != null ? DateTime.tryParse(map['medication_taken_time'] as String) : null,
+      medicationTime: UtilsDateTime.formatBrParse(map['medication_time']),
+      medicationTakenTime: UtilsDateTime.formatBrParse(map['medication_taken_time']),
       dosage: map['dosage'] as String,
       quantity: map['quantity'] as int,
       status: map['status'] as String,

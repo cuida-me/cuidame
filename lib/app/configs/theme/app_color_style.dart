@@ -14,4 +14,11 @@ class AppColors {
   static const Color success = Color(0xFF23C379);
   static const Color error = Color(0xFFFF0000);
   static const Color warning = Color(0xFFFD8247);
+
+  // Medication
+  static const Color darkGreen = Color(0xFF296147);
+  static const Color darkOrange = Color(0xFFFD8247);
+  static const Color lightRed = Color(0xFFEB7287);
+  static const Color lightYellow = Color(0xFFEBD072);
+  static const Color pastelRed = Color(0xFFFF4444);
 }

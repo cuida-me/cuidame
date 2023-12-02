@@ -7,9 +7,9 @@ import 'package:cuidame/app/data/models/scheduling_day_model.dart';
 
 class WeekPatient extends StatefulWidget {
   const WeekPatient({
-    Key? key,
+    super.key,
     required this.schedulingDayModel,
-  }) : super(key: key);
+  });
 
   final List<SchedulingDayModel>? schedulingDayModel;
 
@@ -96,11 +96,12 @@ class _WeekPatientState extends State<WeekPatient> {
         const SizedBox(height: Spacements.XS),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: widget.schedulingDayModel!
-              .map(
-                (e) => cardDay(e.day, e.dayWeek, e.dayName),
-              )
-              .toList(),
+          children: widget.schedulingDayModel
+                  ?.map(
+                    (e) => cardDay(e.day, e.dayWeek, e.dayName),
+                  )
+                  .toList() ??
+              [],
         ),
       ],
     );

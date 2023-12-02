@@ -6,14 +6,14 @@ import 'package:cuidame/app/configs/theme/app_color_style.dart';
 
 class CustomDropdown extends StatelessWidget {
   const CustomDropdown({
-    Key? key,
+    super.key,
     required this.onChanged,
     this.items,
     this.value,
     this.title,
     this.hintText,
     this.enabled,
-  }) : super(key: key);
+  });
 
   final Function(dynamic) onChanged;
   final List<CustomDropdownItem>? items;

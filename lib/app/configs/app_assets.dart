@@ -11,4 +11,6 @@ class AppAssets {
   static const addMedication = 'assets/add_medication.png';
   static const permissionNotification = 'assets/permission_notification.png';
   static const doNotDisturb = 'assets/do_not_disturb.png';
+  static const noSchedulings = 'assets/no_schedulings.png';
+  static const pillMedicine = 'assets/pill_medicine.png';
 }

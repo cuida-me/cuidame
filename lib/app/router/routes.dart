@@ -14,6 +14,7 @@ class Routes {
 
   // Patient Pages
   static const patientQrCode = '/patientQrCode';
+  static const patientSchedulings = '/patientSchedulings';
 
   // Permissions
   static const notificationPermission = '/notificationPermission';

@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:cuidame/app/router/routes.dart';
+import 'package:cuidame/app/utils/utils_logger.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 class UserLoginService {
@@ -12,10 +14,14 @@ class UserLoginService {
   }
 
   initAuthListen() {
-    FirebaseAuth.instance.authStateChanges().listen((value) {
+    FirebaseAuth.instance.authStateChanges().listen((value) async {
       _user.value = value;
 
       if (value != null) {
+        var token = await value.getIdToken();
+
+        if (kDebugMode) UtilsLogger().i('User Token: $token');
+
         if (value.emailVerified) {
           Get.offAllNamed(Routes.navigation);
         } else {

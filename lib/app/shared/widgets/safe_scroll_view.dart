@@ -7,11 +7,11 @@ class SafeScrollView extends StatelessWidget {
   final ScrollPhysics? physics;
 
   const SafeScrollView({
-    Key? key,
+    super.key,
     required this.child,
     this.padding,
     this.physics,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

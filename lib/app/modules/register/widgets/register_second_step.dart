@@ -10,9 +10,9 @@ import 'package:cuidame/app/shared/widgets/primary_button.dart';
 
 class RegisterSecondStep extends StatelessWidget {
   const RegisterSecondStep({
-    Key? key,
+    super.key,
     required this.controller,
-  }) : super(key: key);
+  });
 
   final RegisterController controller;
 

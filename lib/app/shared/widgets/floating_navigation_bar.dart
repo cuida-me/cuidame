@@ -6,9 +6,9 @@ import 'package:cuidame/app/configs/theme/app_color_style.dart';
 
 class FloatingNavigationBar extends StatelessWidget {
   const FloatingNavigationBar({
-    Key? key,
+    super.key,
     required this.buttons,
-  }) : super(key: key);
+  });
 
   final List<Widget> buttons;
 

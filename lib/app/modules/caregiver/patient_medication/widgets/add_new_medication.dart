@@ -9,9 +9,9 @@ import 'package:get/get.dart';
 
 class AddNewMedication extends StatelessWidget {
   const AddNewMedication({
-    Key? key,
+    super.key,
     required this.controller,
-  }) : super(key: key);
+  });
 
   final PatientMedicationController controller;
 

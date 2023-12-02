@@ -7,6 +7,7 @@ import 'package:cuidame/app/modules/confirm_email/confirm_email_page.dart';
 import 'package:cuidame/app/modules/forgot_password/forgot_password_page.dart';
 import 'package:cuidame/app/modules/init/init_page.dart';
 import 'package:cuidame/app/modules/patient/patient_qr_code/patient_qr_code_page.dart';
+import 'package:cuidame/app/modules/patient/patient_schedulings/patient_schedulings_page.dart';
 import 'package:cuidame/app/modules/permissions/notification_permission_page.dart';
 import 'package:cuidame/app/modules/permissions/notification_policy_permission_page.dart';
 import 'package:cuidame/app/modules/register/register_page.dart';
@@ -33,6 +34,7 @@ class CustomRouter {
     Routes.patientQrCode: (_) => const PatientQrCodePage(),
     Routes.notificationPermission: (_) => const NotificationPermissionPage(),
     Routes.notificationPolicyPermission: (_) => const NotificationPolicyPermissionPage(),
+    Routes.patientSchedulings: (_) => const PatientSchedulingsPage(),
   };
 
   static Route<dynamic> onGenerateUnknowedRoute(RouteSettings settings) {

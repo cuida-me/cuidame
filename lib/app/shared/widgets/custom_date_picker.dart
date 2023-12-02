@@ -6,8 +6,7 @@ import 'package:intl/intl.dart';
 
 class CustomDatePicker extends StatelessWidget {
   const CustomDatePicker({
-    Key? key,
-    // this.maskFormatters,
+    super.key,
     this.title,
     this.hintText,
     this.enabled,
@@ -17,7 +16,7 @@ class CustomDatePicker extends StatelessWidget {
     this.enableAllPeriod,
     this.disableFutureDate,
     this.firstDate,
-  }) : super(key: key);
+  });
 
   final String? title;
   final String? hintText;

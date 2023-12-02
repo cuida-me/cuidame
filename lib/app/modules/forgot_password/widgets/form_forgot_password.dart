@@ -10,9 +10,9 @@ import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 
 class FormForgotPassword extends StatelessWidget {
   const FormForgotPassword({
-    Key? key,
+    super.key,
     required this.controller,
-  }) : super(key: key);
+  });
 
   final ForgotPasswordController controller;
 

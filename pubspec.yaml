@@ -28,6 +28,7 @@ dependencies:
   qr_flutter: ^4.1.0
   flutter_timezone: ^1.0.8
   awesome_notifications: ^0.8.2
+  logger: ^2.0.2+1
 
 dev_dependencies:
   flutter_test:

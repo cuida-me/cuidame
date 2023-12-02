@@ -8,10 +8,10 @@ import 'package:cuidame/app/router/routes.dart';
 
 class ProfilePhoto extends StatelessWidget {
   const ProfilePhoto({
-    Key? key,
+    super.key,
     this.profilePhoto,
     required this.onFile,
-  }) : super(key: key);
+  });
 
   final XFile? profilePhoto;
   final Function(XFile file) onFile;

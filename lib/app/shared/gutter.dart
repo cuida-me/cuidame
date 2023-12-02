@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 
 class Gutter extends StatelessWidget {
   const Gutter({
-    Key? key,
+    super.key,
     required this.child,
     this.isSmall = false,
     this.hidePaddingBottom = false,
-  }) : super(key: key);
+  });
 
   final Widget child;
   final bool? isSmall;

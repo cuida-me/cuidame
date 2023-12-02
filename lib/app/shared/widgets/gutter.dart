@@ -5,9 +5,9 @@ import 'package:cuidame/app/configs/constants/spacements.dart';
 
 class Gutter extends StatelessWidget {
   const Gutter({
-    Key? key,
+    super.key,
     this.child,
-  }) : super(key: key);
+  });
 
   final Widget? child;
 

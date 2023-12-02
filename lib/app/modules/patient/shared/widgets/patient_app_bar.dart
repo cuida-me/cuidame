@@ -1,24 +1,23 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:cuidame/app/data/services/patient_login_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'package:cuidame/app/configs/constants/spacements.dart';
 import 'package:cuidame/app/configs/theme/app_color_style.dart';
 import 'package:cuidame/app/data/providers/dependences_injector.dart';
-import 'package:cuidame/app/data/services/user_login_service.dart';
 import 'package:cuidame/app/router/routes.dart';
 
-class UserAppBar extends StatelessWidget implements PreferredSize {
+class PatientAppBar extends StatelessWidget implements PreferredSize {
   final AppBar appBar;
   final Widget? subTitle;
 
-  UserAppBar({
+  PatientAppBar({
     super.key,
     required this.appBar,
     this.subTitle,
   });
 
-  final userLoginService = DependencesInjector.get<UserLoginService>();
+  final patientLoginService = DependencesInjector.get<PatientLoginService>();
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +45,7 @@ class UserAppBar extends StatelessWidget implements PreferredSize {
                     style: Theme.of(context).textTheme.titleLarge,
                     children: [
                       TextSpan(
-                        text: '${userLoginService.user?.displayName}!',
+                        text: '${patientLoginService.patient?.displayName}!',
                         style: Theme.of(context).textTheme.titleLarge!.copyWith(
                               fontWeight: FontWeight.bold,
                             ),
