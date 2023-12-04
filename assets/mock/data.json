@@ -157,13 +157,33 @@
         "day": 7,
         "day_name": "Sab",
         "month_name": "Outubro",
-        "date": "02/12/2023 00:00",
+        "date": "04/12/2023 00:00",
         "day_week": 6,
         "schedulings": [
             {
-                "id": "fgdkmgdlfkg",
+                "id": "1",
                 "name": "Omeprazol",
-                "medication_time": "01/10/2023 14:00",
+                "medication_time": "04/12/2023 14:00",
+                "medication_taken_time": null,
+                "dosage": "ml",
+                "quantity": 20,
+                "status": "PENDING ou DONE",
+                "image": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.flaticon.com%2Fbr%2Ficone-gratis%2Fremedio_5208138&psig=AOvVaw10JHmT8LoLpMDGRMWI4e4v&ust=1699372214632000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCIi1t_vcr4IDFQAAAAAdAAAAABAE"
+            },
+            {
+                "id": "2",
+                "name": "Dorflex",
+                "medication_time": "04/12/2023 15:00",
+                "medication_taken_time": null,
+                "dosage": "ml",
+                "quantity": 20,
+                "status": "PENDING ou DONE",
+                "image": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.flaticon.com%2Fbr%2Ficone-gratis%2Fremedio_5208138&psig=AOvVaw10JHmT8LoLpMDGRMWI4e4v&ust=1699372214632000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCIi1t_vcr4IDFQAAAAAdAAAAABAE"
+            },
+            {
+                "id": "3",
+                "name": "Dorflex",
+                "medication_time": "04/12/2023 13:07",
                 "medication_taken_time": null,
                 "dosage": "ml",
                 "quantity": 20,

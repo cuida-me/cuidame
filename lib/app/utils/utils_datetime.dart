@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 class UtilsDateTime {
   static DateTime? formatBrParse(String? datetime) {
     if (datetime == null) return null;
-    final f = DateFormat('dd/MM/yyyy hh:mm');
+    final f = DateFormat('dd/MM/yyyy HH:mm');
     return f.parse(datetime);
   }
 

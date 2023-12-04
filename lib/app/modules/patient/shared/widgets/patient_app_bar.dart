@@ -10,11 +10,13 @@ import 'package:cuidame/app/router/routes.dart';
 class PatientAppBar extends StatelessWidget implements PreferredSize {
   final AppBar appBar;
   final Widget? subTitle;
+  final bool bgWhite;
 
   PatientAppBar({
     super.key,
     required this.appBar,
     this.subTitle,
+    this.bgWhite = true,
   });
 
   final patientLoginService = DependencesInjector.get<PatientLoginService>();
@@ -61,9 +63,10 @@ class PatientAppBar extends StatelessWidget implements PreferredSize {
       ),
       centerTitle: false,
       titleSpacing: Spacements.M,
-      backgroundColor: Colors.transparent,
+      backgroundColor: bgWhite ? Colors.white : Colors.transparent,
       forceMaterialTransparency: true,
       automaticallyImplyLeading: false,
+      // systemOverlayStyle: Systemm,
     );
   }
 

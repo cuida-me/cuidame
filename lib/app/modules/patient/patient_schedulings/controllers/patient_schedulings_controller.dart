@@ -3,11 +3,14 @@ import 'dart:async';
 import 'package:cuidame/app/data/models/scheduling_day_model.dart';
 import 'package:cuidame/app/data/models/scheduling_medication_type.dart';
 import 'package:cuidame/app/data/repositories/schedulings_repository.dart';
+import 'package:cuidame/app/data/services/scheduling_service.dart';
 import 'package:cuidame/app/utils/utils_datetime.dart';
+import 'package:cuidame/app/utils/utils_logger.dart';
 import 'package:get/get.dart';
 
 class PatientSchedulingsController extends GetxController {
   final SchedulesRepository _schedulesRepository;
+  final SchedulingService _schedulingService;
 
   final loading = false.obs;
 
@@ -19,7 +22,7 @@ class PatientSchedulingsController extends GetxController {
 
   Timer? _schedulingListenTimer;
 
-  PatientSchedulingsController(this._schedulesRepository) {
+  PatientSchedulingsController(this._schedulesRepository, this._schedulingService) {
     getSchedules();
   }
 
@@ -29,14 +32,22 @@ class PatientSchedulingsController extends GetxController {
 
   void getSchedules() {
     loading(true);
-    _schedulesRepository.retrieveSchedules().then((value) {
+    _schedulesRepository.retrieveSchedules().then((value) async {
       final currentDate = DateTime.now();
       schedules.value = value;
 
       if (value != null) {
         schedule.value = value.firstWhereOrNull((e) => UtilsDateTime.isSameDay(e.date, currentDate));
+
+        await _schedulingService.cancelAllSchedules();
+        schedule.value?.schedulings.forEach((e) {
+          _schedulingService.scheduleMedication(e);
+        });
+
         _sortSchedulings();
       }
+    }).catchError((err) {
+      UtilsLogger().w(err);
     }).whenComplete(() => loading(false));
   }
 

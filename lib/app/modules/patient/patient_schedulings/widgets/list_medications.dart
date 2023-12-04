@@ -129,7 +129,7 @@ class ListMedications extends StatelessWidget {
         children: [
           if (controller.schedulingsDelayed?.isNotEmpty ?? false) buildSchedulingsDelayed(),
           if (controller.schedulingsCloseToTime?.isNotEmpty ?? false) buildSchedulingsCloseToTime(),
-          if (controller.schedulings.value?.isNotEmpty ?? false) buildSchedulingsInTime(),
+          if (controller.schedulingsInTimeAndTaken?.isNotEmpty ?? false) buildSchedulingsInTime(),
         ],
       ),
     );

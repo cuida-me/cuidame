@@ -30,28 +30,30 @@ class _PatientSchedulingsPageState extends State<PatientSchedulingsPage> {
           style: Theme.of(context).textTheme.bodyMedium,
         ),
       ),
-      body: Gutter(
-        hidePaddingBottom: true,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Obx(
-              () => controller.loading.value
-                  ? const CircularProgressIndicator()
-                  : WeekPatient(schedulingDayModel: controller.schedules.value),
-            ),
-            const SizedBox(height: Spacements.L),
-            Expanded(
-              child: Obx(
-                () => !controller.loading.value && controller.isSchedulings
-                    ? ListMedications(controller: controller)
-                    : !controller.loading.value
-                        ? const Center(child: CircularProgressIndicator())
-                        : const NoMedication(),
+      body: SafeArea(
+        child: Gutter(
+          hidePaddingBottom: true,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Obx(
+                () => controller.loading.value
+                    ? const CircularProgressIndicator()
+                    : WeekPatient(schedulingDayModel: controller.schedules.value),
               ),
-            ),
-          ],
+              const SizedBox(height: Spacements.L),
+              Expanded(
+                child: Obx(
+                  () => !controller.loading.value && controller.isSchedulings
+                      ? ListMedications(controller: controller)
+                      : controller.loading.value
+                          ? const Center(child: CircularProgressIndicator())
+                          : const NoMedication(),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -42,7 +42,7 @@ class _WeekPatientState extends State<WeekPatient> {
 
     return Expanded(
       child: Container(
-        margin: weekDay == 6 ? const EdgeInsets.only(right: 0) : const EdgeInsets.only(right: Spacements.XS),
+        margin: weekDay == 6 ? const EdgeInsets.only(right: 0) : const EdgeInsets.only(right: Spacements.XXS),
         padding: const EdgeInsets.symmetric(
           vertical: Spacements.XS,
         ),
