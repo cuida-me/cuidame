@@ -1,12 +1,16 @@
+import 'package:cuidame/app/data/models/patient_model.dart';
+import 'package:cuidame/app/data/services/caregiver_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class NavigationController extends GetxController with GetSingleTickerProviderStateMixin {
+  final CaregiverService _caregiverService;
+
+  NavigationController(this._caregiverService);
+
   late TabController tabController;
 
   final selectIndex = 0.obs;
-
-  final patient = RxnString('');
 
   @override
   void onInit() {
@@ -18,7 +22,9 @@ class NavigationController extends GetxController with GetSingleTickerProviderSt
     );
   }
 
-  bool get existPatient => patient.value != null;
+  PatientModel? get patient => _caregiverService.patient;
+  bool get existPatient => patient != null;
+  bool get loading => _caregiverService.loading;
 
   String get subTitle {
     switch (selectIndex.value) {

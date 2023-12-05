@@ -2,9 +2,12 @@ import 'package:cuidame/app/configs/constants/spacements.dart';
 import 'package:cuidame/app/configs/constants/toast_type.dart';
 import 'package:cuidame/app/configs/theme/app_color_style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/route_manager.dart';
 
 class Utils {
+  static String apiUrlBase = dotenv.get('API_BASE_URL');
+
   static void toast(String? title, String? message, [ToastType? toastType]) {
     Color bgColor;
     Color? textColor;

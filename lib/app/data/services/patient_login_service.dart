@@ -9,7 +9,7 @@ class PatientLoginService {
   }
 
   initAuthPatient() {
-    _patient.value = PatientModel(displayName: 'Samuel');
+    _patient.value = PatientModel(name: 'Samuel');
   }
 
   PatientModel? get patient => _patient.value;

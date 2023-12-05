@@ -35,6 +35,9 @@ class UserLoginService {
 
   listenEmailVerify() {
     Timer.periodic(const Duration(seconds: 1), (timer) async {
+      if (_user.value == null) {
+        timer.cancel();
+      }
       await _user.value?.reload();
       final user = FirebaseAuth.instance.currentUser;
 
@@ -49,6 +52,8 @@ class UserLoginService {
   User? get user => _user.value;
 
   bool get isAuthenticated => _user.value != null;
+
+  Future<String?> get userToken async => await _user.value?.getIdToken();
 
   void signOut() {
     FirebaseAuth.instance.signOut();

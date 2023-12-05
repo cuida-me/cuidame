@@ -19,6 +19,7 @@ class PatientMedicationPage extends StatefulWidget {
 class _PatientMedicationPageState extends State<PatientMedicationPage> {
   final controller = DependencesInjector.get<PatientMedicationController>();
   final controllerNavigation = DependencesInjector.get<NavigationController>();
+
   @override
   Widget build(BuildContext context) {
     return Gutter(
@@ -36,7 +37,7 @@ class _PatientMedicationPageState extends State<PatientMedicationPage> {
           const SizedBox(height: Spacements.L),
           Expanded(
             child: Obx(() {
-              if (controller.patient.value != null) return AddNewMedication(controller: controller);
+              if (controller.existPatient) return AddNewMedication(controller: controller);
               return CreateNewPatient(controller: controller);
             }),
           ),

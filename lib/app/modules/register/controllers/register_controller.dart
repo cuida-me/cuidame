@@ -1,7 +1,14 @@
-import 'package:get/get.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
+
+import 'package:cuidame/app/data/repositories/caregiver_repository.dart';
 
 class RegisterController extends GetxController {
+  final CaregiverRepository _caregiverRepository;
+
+  RegisterController(this._caregiverRepository);
+
   final loading = false.obs;
 
   final titleBar = 'Tela inicial'.obs;
@@ -73,9 +80,10 @@ class RegisterController extends GetxController {
     loading(true);
     FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: email.value!, password: password.value!)
-        .then((credential) {
+        .then((credential) async {
       credential.user?.updateDisplayName(name.value);
       credential.user?.sendEmailVerification().then((_) {});
+      await _caregiverRepository.registerCaregiver();
     }).catchError((err) {
       if (err.code == 'email-already-in-use') {
         emailExist.value = true;

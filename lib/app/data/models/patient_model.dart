@@ -1,22 +1,35 @@
 import 'dart:convert';
 
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:cuidame/app/utils/utils_datetime.dart';
+
 class PatientModel {
-  String? displayName;
+  String? name;
+  DateTime? birthDate;
+  String? avatar;
+  int? sex;
 
   PatientModel({
-    this.displayName,
+    this.name,
+    this.birthDate,
+    this.avatar,
+    this.sex,
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'displayName': displayName,
+      'name': name,
+      'birth_date': birthDate?.toIso8601String(),
+      'avatar': avatar,
+      'sex': sex,
     };
   }
 
   factory PatientModel.fromMap(Map<String, dynamic> map) {
     return PatientModel(
-      displayName: map['displayName'] != null ? map['displayName'] as String : null,
+      name: map['name'] != null ? map['name'] as String : null,
+      birthDate: UtilsDateTime.formatBrParse(map['birth_date']),
+      avatar: map['avatar'] != null ? map['avatar'] as String : null,
+      sex: map['sex'] != null ? map['sex'] as int : null,
     );
   }
 

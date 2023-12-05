@@ -1,8 +1,17 @@
+import 'package:cuidame/app/data/models/patient_model.dart';
+import 'package:cuidame/app/data/repositories/caregiver_repository.dart';
+import 'package:cuidame/app/data/services/caregiver_service.dart';
 import 'package:cuidame/app/router/routes.dart';
+import 'package:cuidame/app/utils/utils_logger.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class PatientRegisterController extends GetxController {
+  final CaregiverRepository _caregiverRepository;
+  final CaregiverService _caregiverService;
+
+  PatientRegisterController(this._caregiverRepository, this._caregiverService);
+
   final loading = false.obs;
 
   final profilePhoto = Rxn<XFile>();
@@ -27,6 +36,21 @@ class PatientRegisterController extends GetxController {
   }
 
   void submit() {
-    Get.toNamed(Routes.patientConnect);
+    final patient = PatientModel(
+      name: name.value,
+      birthDate: dateOfBirth.value,
+      avatar: profilePhoto.value.toString(),
+      sex: gender.value,
+    );
+
+    loading.value = true;
+    _caregiverRepository.createPatient(patient).then((value) {
+      if (value) {
+        _caregiverService.getPatient();
+        Get.toNamed(Routes.patientConnect);
+      }
+    }).catchError((err) {
+      UtilsLogger().e(err);
+    }).whenComplete(() => loading.value = false);
   }
 }
