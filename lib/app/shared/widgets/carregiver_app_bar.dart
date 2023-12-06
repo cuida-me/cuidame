@@ -30,8 +30,11 @@ class CaregiverAppBar extends StatelessWidget implements PreferredSize {
               onTap: () {
                 Get.toNamed(Routes.myProfile);
               },
-              child: const CircleAvatar(
+              child: CircleAvatar(
                 backgroundColor: AppColors.primary,
+                backgroundImage: caregiverService.caregiver != null
+                    ? Image.network(caregiverService.caregiver?.avatar ?? '').image
+                    : null,
                 radius: 24,
               ),
             ),

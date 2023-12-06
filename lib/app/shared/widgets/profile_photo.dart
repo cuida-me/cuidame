@@ -10,14 +10,22 @@ class ProfilePhoto extends StatelessWidget {
   const ProfilePhoto({
     super.key,
     this.profilePhoto,
+    this.profilePhotoUrl,
     required this.onFile,
+    this.loading = false,
   });
 
   final XFile? profilePhoto;
-  final Function(XFile file) onFile;
+  final String? profilePhotoUrl;
+  final Function(XFile? file) onFile;
+  final bool loading;
 
   @override
   Widget build(BuildContext context) {
+    bool isProfilePhoto() {
+      return profilePhoto != null || profilePhotoUrl != null;
+    }
+
     return Material(
       color: AppColors.lightGray,
       shape: const CircleBorder(),
@@ -35,15 +43,33 @@ class ProfilePhoto extends StatelessWidget {
                     profilePhoto!.path,
                   ),
                 )
-              : null,
+              : profilePhotoUrl != null
+                  ? Image.network(profilePhotoUrl!).image
+                  : null,
           radius: 100,
           child: profilePhoto == null
-              ? const Center(
-                  child: Icon(
-                    Icons.camera_alt_outlined,
-                    color: AppColors.midGray,
-                    size: 40,
-                  ),
+              ? Center(
+                  child: loading
+                      ? Container(
+                          height: double.maxFinite,
+                          width: double.maxFinite,
+                          decoration: BoxDecoration(
+                            color: AppColors.black.withOpacity(0.3),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Center(
+                            child: CircularProgressIndicator(
+                              color: AppColors.light,
+                            ),
+                          ),
+                        )
+                      : isProfilePhoto()
+                          ? null
+                          : const Icon(
+                              Icons.camera_alt_outlined,
+                              color: AppColors.midGray,
+                              size: 40,
+                            ),
                 )
               : const SizedBox(),
         ),

@@ -30,6 +30,7 @@ dependencies:
   awesome_notifications: ^0.8.2
   logger: ^2.0.2+1
   http_interceptor: ^2.0.0-beta.7
+  firebase_storage: ^11.5.3
 
 dev_dependencies:
   flutter_test:

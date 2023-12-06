@@ -51,6 +51,8 @@ class UserLoginService {
 
   User? get user => _user.value;
 
+  String get userUid => _user.value?.uid ?? '';
+
   bool get isAuthenticated => _user.value != null;
 
   Future<String?> get userToken async => await _user.value?.getIdToken();

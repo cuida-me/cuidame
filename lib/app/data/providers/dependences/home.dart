@@ -1,5 +1,6 @@
 import 'package:cuidame/app/data/providers/dependences_injector.dart';
 import 'package:cuidame/app/data/repositories/caregiver_repository.dart';
+import 'package:cuidame/app/data/repositories/firebase_storage_repository.dart';
 import 'package:cuidame/app/data/repositories/schedulings_repository.dart';
 import 'package:cuidame/app/data/services/caregiver_service.dart';
 import 'package:cuidame/app/data/services/user_login_service.dart';
@@ -31,6 +32,7 @@ void setupHomeInjections() {
     () => MyProfileController(
       DependencesInjector.get<UserLoginService>(),
       DependencesInjector.get<CaregiverService>(),
+      DependencesInjector.get<FirebaseStorageRepository>(),
     ),
   );
 

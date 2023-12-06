@@ -7,6 +7,7 @@ import 'package:cuidame/app/shared/widgets/custom_date_picker.dart';
 import 'package:cuidame/app/shared/widgets/custom_dropdown.dart';
 import 'package:cuidame/app/shared/widgets/custom_text_form_field.dart';
 import 'package:cuidame/app/shared/widgets/primary_button.dart';
+import 'package:cuidame/app/shared/widgets/profile_photo.dart';
 import 'package:cuidame/app/shared/widgets/safe_scroll_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -39,19 +40,12 @@ class _MyProfilePageState extends State<MyProfilePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppColors.black.withOpacity(0.15),
-                          offset: const Offset(2, 2),
-                        ),
-                      ],
-                    ),
-                    child: const CircleAvatar(
-                      backgroundColor: AppColors.primary,
-                      radius: 100,
+                  const SizedBox(height: Spacements.S),
+                  Obx(
+                    () => ProfilePhoto(
+                      onFile: controller.uploadProfilePhoto,
+                      profilePhotoUrl: controller.avatar.value,
+                      loading: controller.loadingProfilePhoto.value,
                     ),
                   ),
                   const SizedBox(height: Spacements.S),
