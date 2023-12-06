@@ -30,6 +30,7 @@ void setupHomeInjections() {
   DependencesInjector.registerFactory<MyProfileController>(
     () => MyProfileController(
       DependencesInjector.get<UserLoginService>(),
+      DependencesInjector.get<CaregiverService>(),
     ),
   );
 

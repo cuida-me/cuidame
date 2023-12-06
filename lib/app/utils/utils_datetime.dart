@@ -7,6 +7,12 @@ class UtilsDateTime {
     return f.parse(datetime);
   }
 
+  static String? toFormatBr(DateTime? datetime) {
+    if (datetime == null) return null;
+    final f = DateFormat('dd/MM/yyyy HH:mm');
+    return f.format(datetime);
+  }
+
   static String? timeString(DateTime? datetime) {
     if (datetime == null) return null;
     return '${datetime.hour.toString().padLeft(2, '0')}:${datetime.minute.toString().padLeft(2, '0')}h';

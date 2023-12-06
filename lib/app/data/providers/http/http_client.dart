@@ -16,7 +16,7 @@ class HttpClient extends http.BaseClient {
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) async {
     if (kDebugMode) {
-      UtilsLogger().d('HTTP CALL: ${request.url}');
+      UtilsLogger().i('HTTP CALL: ${request.url}');
     }
 
     final userToken = await _userLoginService.userToken;
