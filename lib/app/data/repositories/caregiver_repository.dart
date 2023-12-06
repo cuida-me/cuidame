@@ -1,4 +1,5 @@
-import 'package:cuidame/app/data/models/caregiver_model.dart';
+import 'package:cuidame/app/data/models/caregiver/caregiver_model.dart';
+import 'package:cuidame/app/data/models/caregiver/caregiver_update_model.dart';
 import 'package:cuidame/app/data/models/patient_model.dart';
 import 'package:cuidame/app/data/providers/http/http_client.dart';
 import 'package:cuidame/app/utils/utils.dart';
@@ -6,6 +7,7 @@ import 'package:cuidame/app/utils/utils.dart';
 abstract class CaregiverRepository {
   Future<bool> registerCaregiver();
   Future<CaregiverModel> retrieveMyProfile();
+  Future<CaregiverUpdateModel?> updateMyProfile(CaregiverUpdateModel caregiver);
   Future retrievePatient();
   Future<bool> createPatient(PatientModel patient);
 }
@@ -28,12 +30,22 @@ class CaregiverRepositoryImpl implements CaregiverRepository {
   }
 
   @override
-  Future retrievePatient() async {
+  Future<CaregiverUpdateModel?> updateMyProfile(CaregiverUpdateModel caregiver) async {
+    final res = await _client.put(
+      Uri.https(Utils.apiUrlBase, '/caregiver'),
+      body: caregiver.toJson(),
+    );
+    if (res.statusCode == 200) return CaregiverUpdateModel.fromJson(res.body);
+    return null;
+  }
+
+  @override
+  Future<PatientModel?> retrievePatient() async {
     final res = await _client.get(Uri.https(Utils.apiUrlBase, 'patient'));
     if (res.statusCode == 400) {
-      return;
+      return null;
     }
-    return '';
+    return PatientModel.fromJson(res.body);
   }
 
   @override
