@@ -43,6 +43,10 @@ class MyProfileController extends GetxController {
     gender.value = caregiver?.sex;
   }
 
+  void onChangeDate(value) {
+    dateOfBirth.value = value;
+  }
+
   void onChangeGender(value) {
     gender.value = value;
   }

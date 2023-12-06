@@ -13,6 +13,12 @@ class UtilsDateTime {
     return f.format(datetime);
   }
 
+  static String? toFormatGo(DateTime? datetime) {
+    if (datetime == null) return null;
+    final f = DateFormat('yyyy-MM-dd HH:mm:ss');
+    return f.format(datetime);
+  }
+
   static String? timeString(DateTime? datetime) {
     if (datetime == null) return null;
     return '${datetime.hour.toString().padLeft(2, '0')}:${datetime.minute.toString().padLeft(2, '0')}h';

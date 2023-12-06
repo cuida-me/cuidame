@@ -1,7 +1,5 @@
 import 'dart:convert';
-
 import 'package:cuidame/app/data/models/scheduling_day_model.dart';
-import 'package:cuidame/app/data/providers/http/http_client.dart';
 import 'package:flutter/services.dart';
 
 abstract class SchedulesRepository {
@@ -10,9 +8,7 @@ abstract class SchedulesRepository {
 
 class SchedulesRepositoryImpl implements SchedulesRepository {
   // ignore: unused_field
-  final HttpClient _client;
-
-  SchedulesRepositoryImpl(this._client);
+  SchedulesRepositoryImpl();
 
   @override
   Future<List<SchedulingDayModel>?> retrieveSchedules() async {

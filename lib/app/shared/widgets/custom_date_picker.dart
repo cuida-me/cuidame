@@ -38,7 +38,7 @@ class CustomDatePicker extends StatelessWidget {
     final dateNonNull = DateTime.now();
 
     final controller = TextEditingController(
-      text: date != null && hintText == null
+      text: date != null
           ? dateFormat.format(date)
           : hintText == null
               ? 'Todas as datas'

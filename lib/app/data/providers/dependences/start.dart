@@ -1,5 +1,4 @@
 import 'package:cuidame/app/data/providers/dependences_injector.dart';
-import 'package:cuidame/app/data/providers/http/http_client.dart';
 import 'package:cuidame/app/data/repositories/caregiver_repository.dart';
 import 'package:cuidame/app/data/services/caregiver_service.dart';
 import 'package:cuidame/app/data/services/patient_login_service.dart';
@@ -14,12 +13,6 @@ import 'package:cuidame/app/modules/start/controllers/start_controller.dart';
 void setupStartInjections() {
   DependencesInjector.registerLazySingleton<PatientLoginService>(
     () => PatientLoginService(),
-  );
-
-  DependencesInjector.registerFactory<HttpClient>(
-    () => HttpClient(
-      DependencesInjector.get<UserLoginService>(),
-    ),
   );
 
   DependencesInjector.registerFactory<StartController>(

@@ -81,6 +81,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                             initialDate: controller.dateOfBirth.value,
                             dateOnly: true,
                             disableFutureDate: true,
+                            onChange: controller.onChangeDate,
                           ),
                         ),
                       ),
@@ -93,11 +94,11 @@ class _MyProfilePageState extends State<MyProfilePage> {
                             onChanged: controller.onChangeGender,
                             items: [
                               CustomDropdownItem(
-                                text: 'Feminino',
+                                text: 'Masculino',
                                 value: 0,
                               ),
                               CustomDropdownItem(
-                                text: 'Masculino',
+                                text: 'Feminino',
                                 value: 1,
                               ),
                             ],
