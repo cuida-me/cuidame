@@ -1,10 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
+import 'package:cuidame/app/shared/widgets/camera_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cuidame/app/configs/theme/app_color_style.dart';
-import 'package:cuidame/app/router/routes.dart';
 
 class ProfilePhoto extends StatelessWidget {
   const ProfilePhoto({
@@ -32,7 +32,14 @@ class ProfilePhoto extends StatelessWidget {
       elevation: 1,
       child: InkWell(
         onTap: () {
-          Get.toNamed(Routes.camera)?.then((file) => onFile(file));
+          Get.to(
+            CameraWidget(
+              onChange: (file) {
+                onFile(file);
+              },
+            ),
+          );
+          // Get.toNamed(Routes.camera)?.then((file) => onFile(file));
         },
         customBorder: const CircleBorder(),
         child: CircleAvatar(

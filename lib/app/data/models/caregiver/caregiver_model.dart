@@ -28,7 +28,7 @@ class CaregiverModel {
     return <String, dynamic>{
       'id': id,
       'name': name,
-      'birth_date': birthDate?.toIso8601String(),
+      'birth_date': birthDate?.toUtc().toIso8601String(),
       'avatar': avatar,
       'sex': sex,
       'email': email,

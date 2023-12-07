@@ -9,7 +9,7 @@
             {
                 "id": "20",
                 "name": "Omeprazol",
-                "medication_time": "01/12/2023 14:29",
+                "medication_time": "2023-11-02T03:00:00Z",
                 "medication_taken_time": null,
                 "dosage": "ml",
                 "quantity": 20,
@@ -19,7 +19,7 @@
             {
                 "id": "21",
                 "name": "Omeprazol",
-                "medication_time": "01/10/2023 20:00",
+                "medication_time": "2023-11-02T03:00:00Z",
                 "medication_taken_time": null,
                 "dosage": "ml",
                 "quantity": 20,
@@ -38,7 +38,7 @@
             {
                 "id": "fgdkmgdlfkg",
                 "name": "Omeprazol",
-                "medication_time": "01/10/2023 14:00",
+                "medication_time": "2023-11-02T03:00:00Z",
                 "medication_taken_time": null,
                 "dosage": "ml",
                 "quantity": 20,
@@ -57,7 +57,7 @@
             {
                 "id": "fgdkmgdlfkg",
                 "name": "Omeprazol",
-                "medication_time": "01/10/2023 14:00",
+                "medication_time": "2023-11-02T03:00:00Z",
                 "medication_taken_time": null,
                 "dosage": "ml",
                 "quantity": 20,
@@ -76,7 +76,7 @@
             {
                 "id": "fgdkmgdlfkg",
                 "name": "Omeprazol",
-                "medication_time": "01/10/2023 14:00",
+                "medication_time": "2023-11-02T03:00:00Z",
                 "medication_taken_time": null,
                 "dosage": "ml",
                 "quantity": 20,
@@ -95,7 +95,7 @@
             {
                 "id": "fgdkmgdlfkg",
                 "name": "Omeprazol",
-                "medication_time": "01/10/2023 14:00",
+                "medication_time": "2023-12-07T14:00:00Z",
                 "medication_taken_time": null,
                 "dosage": "ml",
                 "quantity": 20,
@@ -114,7 +114,7 @@
             {
                 "id": "21",
                 "name": "Omeprazol",
-                "medication_time": "01/12/2023 21:20",
+                "medication_time": "2023-11-02T03:00:00Z",
                 "medication_taken_time": null,
                 "dosage": "ml",
                 "quantity": 20,
@@ -124,7 +124,7 @@
             {
                 "id": "22",
                 "name": "Minelati",
-                "medication_time": "01/12/2023 22:43",
+                "medication_time": "2023-11-02T03:00:00Z",
                 "medication_taken_time": null,
                 "dosage": "ml",
                 "quantity": 20,
@@ -134,7 +134,7 @@
             {
                 "id": "23",
                 "name": "Dorflex",
-                "medication_time": "01/12/2023 22:43",
+                "medication_time": "2023-11-02T03:00:00Z",
                 "medication_taken_time": null,
                 "dosage": "ml",
                 "quantity": 20,
@@ -144,7 +144,7 @@
             {
                 "id": "24",
                 "name": "DorBlock",
-                "medication_time": "01/12/2023 23:00",
+                "medication_time": "2023-11-02T03:00:00Z",
                 "medication_taken_time": null,
                 "dosage": "ml",
                 "quantity": 20,
@@ -163,7 +163,7 @@
             {
                 "id": "1",
                 "name": "Omeprazol",
-                "medication_time": "04/12/2023 14:00",
+                "medication_time": "2023-12-07T14:00:00Z",
                 "medication_taken_time": null,
                 "dosage": "ml",
                 "quantity": 20,
@@ -173,7 +173,7 @@
             {
                 "id": "2",
                 "name": "Dorflex",
-                "medication_time": "04/12/2023 15:00",
+                "medication_time": "2023-12-07T15:00:00Z",
                 "medication_taken_time": null,
                 "dosage": "ml",
                 "quantity": 20,
@@ -183,7 +183,7 @@
             {
                 "id": "3",
                 "name": "Dorflex",
-                "medication_time": "04/12/2023 13:07",
+                "medication_time": "2023-12-07T16:00:00Z",
                 "medication_taken_time": null,
                 "dosage": "ml",
                 "quantity": 20,

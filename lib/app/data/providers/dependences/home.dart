@@ -40,10 +40,13 @@ void setupHomeInjections() {
     () => PatientRegisterController(
       DependencesInjector.get<CaregiverRepository>(),
       DependencesInjector.get<CaregiverService>(),
+      DependencesInjector.get<FirebaseStorageRepository>(),
     ),
   );
 
   DependencesInjector.registerFactory<PatientConnectController>(
-    () => PatientConnectController(),
+    () => PatientConnectController(
+      DependencesInjector.get<CaregiverService>(),
+    ),
   );
 }

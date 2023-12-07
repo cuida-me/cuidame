@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:cuidame/app/data/models/scheduling_medication_type.dart';
-import 'package:cuidame/app/utils/utils_datetime.dart';
 
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class SchedulingDayModel {
@@ -26,7 +25,7 @@ class SchedulingDayModel {
       'day': day,
       'day_name': dayName,
       'month_name': monthName,
-      'date': date?.toIso8601String(),
+      'date': date?.toUtc().toIso8601String(),
       'day_week': dayWeek,
       'schedulings': schedulings.map((x) => x.toMap()).toList(),
     };
@@ -37,7 +36,7 @@ class SchedulingDayModel {
       day: map['day'] as int,
       dayName: map['day_name'] as String,
       monthName: map['month_name'] as String,
-      date: UtilsDateTime.formatBrParse(map['date']),
+      date: map['date'] != null ? DateTime.tryParse(map['date'] as String) : null,
       dayWeek: map['day_week'] as int,
       schedulings: List<SchedulingModel>.from(
         (map['schedulings'] as List<dynamic>).map<SchedulingModel>(
@@ -80,8 +79,8 @@ class SchedulingModel {
     return <String, dynamic>{
       'id': id,
       'name': name,
-      'medication_time': medicationTime?.toIso8601String(),
-      'medication_taken_time': medicationTakenTime?.toIso8601String(),
+      'medication_time': medicationTime?.toUtc().toIso8601String(),
+      'medication_taken_time': medicationTakenTime?.toUtc().toIso8601String(),
       'dosage': dosage,
       'quantity': quantity,
       'status': status,
@@ -93,8 +92,9 @@ class SchedulingModel {
     return SchedulingModel(
       id: map['id'] as String,
       name: map['name'] as String,
-      medicationTime: UtilsDateTime.formatBrParse(map['medication_time']),
-      medicationTakenTime: UtilsDateTime.formatBrParse(map['medication_taken_time']),
+      medicationTime: map['medication_time'] != null ? DateTime.tryParse(map['medication_time'] as String) : null,
+      medicationTakenTime:
+          map['medication_taken_time'] != null ? DateTime.tryParse(map['medication_taken_time'] as String) : null,
       dosage: map['dosage'] as String,
       quantity: map['quantity'] as int,
       status: map['status'] as String,

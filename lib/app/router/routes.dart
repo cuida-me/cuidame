@@ -9,7 +9,6 @@ class Routes {
   static const myProfile = '/myProfile';
   static const patientRegister = '/patientRegister';
   static const patientConnect = '/patientConnect';
-  static const camera = '/camera';
   static const addMedication = '/addMedication';
 
   // Patient Pages

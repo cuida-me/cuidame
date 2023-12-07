@@ -11,7 +11,6 @@ import 'package:cuidame/app/modules/patient/patient_schedulings/patient_scheduli
 import 'package:cuidame/app/modules/permissions/notification_permission_page.dart';
 import 'package:cuidame/app/modules/permissions/notification_policy_permission_page.dart';
 import 'package:cuidame/app/modules/register/register_page.dart';
-import 'package:cuidame/app/modules/shared/camera/camera_page.dart';
 import 'package:cuidame/app/modules/signin/signin_page.dart';
 import 'package:cuidame/app/modules/start/start_page.dart';
 import 'package:cuidame/app/router/routes.dart';
@@ -29,7 +28,6 @@ class CustomRouter {
     Routes.myProfile: (_) => const MyProfilePage(),
     Routes.patientRegister: (_) => const PatientRegisterPage(),
     Routes.patientConnect: (_) => const PatientConnectPage(),
-    Routes.camera: (_) => const CameraPage(),
     Routes.addMedication: (_) => const AddMedicationPage(),
     Routes.patientQrCode: (_) => const PatientQrCodePage(),
     Routes.notificationPermission: (_) => const NotificationPermissionPage(),

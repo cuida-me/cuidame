@@ -10,6 +10,7 @@ abstract class CaregiverRepository {
   Future<CaregiverUpdateModel?> updateMyProfile(CaregiverUpdateModel caregiver);
   Future retrievePatient();
   Future<bool> createPatient(PatientModel patient);
+  Future<bool> linkPatientDevice(String token);
 }
 
 class CaregiverRepositoryImpl implements CaregiverRepository {
@@ -52,5 +53,14 @@ class CaregiverRepositoryImpl implements CaregiverRepository {
     );
 
     return res.statusCode == 200 || res.statusCode == 201;
+  }
+
+  @override
+  Future<bool> linkPatientDevice(String token) async {
+    final res = await httpClientCaregiver.post(
+      Uri.https(Utils.apiUrlBase, '/caregiver/patient/device/$token'),
+    );
+
+    return res.statusCode == 200;
   }
 }

@@ -1,16 +1,22 @@
+import 'package:cuidame/app/utils/utils_logger.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:simple_camera/simple_camera.dart';
 
-class CameraPage extends StatefulWidget {
-  const CameraPage({super.key});
+class CameraWidget extends StatefulWidget {
+  const CameraWidget({
+    super.key,
+    this.onChange,
+  });
+
+  final Function(XFile? file)? onChange;
 
   @override
-  State<CameraPage> createState() => _CameraPageState();
+  State<CameraWidget> createState() => _CameraWidgetState();
 }
 
-class _CameraPageState extends State<CameraPage> {
+class _CameraWidgetState extends State<CameraWidget> {
   final simpleCamera = SimpleCamera();
 
   @override
@@ -25,9 +31,13 @@ class _CameraPageState extends State<CameraPage> {
         setState(() {});
       });
     } catch (e) {
-      // ignore: avoid_print
-      print(e.toString());
+      UtilsLogger().e(e);
     }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -39,13 +49,19 @@ class _CameraPageState extends State<CameraPage> {
             SimpleCameraPreview(
               simpleCamera: simpleCamera,
               onPressedTakePicture: (file) {
-                Get.back<XFile>(result: file);
+                if (widget.onChange != null) {
+                    widget.onChange!(file);
+                  }
+                  Get.back();
               },
               onPressedGallery: () async {
                 final picker = ImagePicker();
                 final photo = await picker.pickImage(source: ImageSource.gallery);
                 if (photo != null) {
-                  Get.back<XFile>(result: photo);
+                  if (widget.onChange != null) {
+                    widget.onChange!(photo);
+                  }
+                  Get.back();
                 }
               },
             ),
@@ -61,6 +77,9 @@ class _CameraPageState extends State<CameraPage> {
                   child: InkWell(
                     customBorder: const CircleBorder(),
                     onTap: () {
+                      if (widget.onChange != null) {
+                        widget.onChange!(null);
+                      }
                       Get.back();
                     },
                     child: const Center(

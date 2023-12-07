@@ -43,11 +43,15 @@ class CaregiverService {
     }
   }
 
-  void getPatient() {
+  Future getPatient() async {
     _caregiverRepository.retrievePatient().then((value) {
       _patient.value = value;
     }).catchError((err) {
       UtilsLogger().e(err);
     });
+  }
+
+  Future linkPatientDevice(String token) async {
+    await _caregiverRepository.linkPatientDevice(token);
   }
 }

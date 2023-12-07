@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 
 abstract class FirebaseStorageRepository {
   Future<String?> uploadCaregiverProfilePhoto(XFile file);
+  Future<String?> uploadPatientProfilePhoto(XFile file);
 }
 
 class FirebaseStorageRepositoryImpl implements FirebaseStorageRepository {
@@ -33,6 +34,14 @@ class FirebaseStorageRepositoryImpl implements FirebaseStorageRepository {
   Future<String?> uploadCaregiverProfilePhoto(XFile file) async {
     final extension = file.name.split('.')[1];
     var path = '${_userLoginService.userUid}/profilePhoto/profile_photo.$extension';
+    final url = await _uploadImage(file, path);
+    return url;
+  }
+
+  @override
+  Future<String?> uploadPatientProfilePhoto(XFile file) async {
+    final extension = file.name.split('.')[1];
+    var path = '${_userLoginService.userUid}/patient/profile_photo.$extension';
     final url = await _uploadImage(file, path);
     return url;
   }

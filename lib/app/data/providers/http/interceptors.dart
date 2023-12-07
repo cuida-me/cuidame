@@ -2,7 +2,6 @@ import 'package:cuidame/app/data/providers/dependences_injector.dart';
 import 'package:cuidame/app/data/services/user_login_service.dart';
 import 'package:cuidame/app/utils/utils_logger.dart';
 import 'package:flutter/foundation.dart';
-import 'package:get/get.dart';
 import 'package:http/http.dart';
 import 'package:http_interceptor/models/interceptor_contract.dart';
 
@@ -35,8 +34,7 @@ class CaregiverInterceptor extends InterceptorContract {
     }
 
     if (response.statusCode == 400) {
-      response.printError();
-      throw Exception();
+      throw Exception(response.reasonPhrase);
     }
     return response;
   }
