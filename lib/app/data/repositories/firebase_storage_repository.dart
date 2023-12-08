@@ -1,6 +1,5 @@
 import 'dart:io';
-
-import 'package:cuidame/app/data/services/user_login_service.dart';
+import 'package:cuidame/app/data/services/caregiver_login_service.dart';
 import 'package:cuidame/app/utils/utils_logger.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
@@ -12,9 +11,9 @@ abstract class FirebaseStorageRepository {
 
 class FirebaseStorageRepositoryImpl implements FirebaseStorageRepository {
   final storageRef = FirebaseStorage.instance.ref();
-  final UserLoginService _userLoginService;
+  final CaregiverLoginService _caregiverLoginService;
 
-  FirebaseStorageRepositoryImpl(this._userLoginService);
+  FirebaseStorageRepositoryImpl(this._caregiverLoginService);
 
   Future<String?> _uploadImage(XFile file, String path) async {
     final pathRef = storageRef.child(path);
@@ -33,7 +32,7 @@ class FirebaseStorageRepositoryImpl implements FirebaseStorageRepository {
   @override
   Future<String?> uploadCaregiverProfilePhoto(XFile file) async {
     final extension = file.name.split('.')[1];
-    var path = '${_userLoginService.userUid}/profilePhoto/profile_photo.$extension';
+    var path = '${_caregiverLoginService.userUid}/profilePhoto/profile_photo.$extension';
     final url = await _uploadImage(file, path);
     return url;
   }
@@ -41,7 +40,7 @@ class FirebaseStorageRepositoryImpl implements FirebaseStorageRepository {
   @override
   Future<String?> uploadPatientProfilePhoto(XFile file) async {
     final extension = file.name.split('.')[1];
-    var path = '${_userLoginService.userUid}/patient/profile_photo.$extension';
+    var path = '${_caregiverLoginService.userUid}/patient/profile_photo.$extension';
     final url = await _uploadImage(file, path);
     return url;
   }

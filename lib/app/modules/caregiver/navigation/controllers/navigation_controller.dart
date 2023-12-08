@@ -1,4 +1,4 @@
-import 'package:cuidame/app/data/models/patient_model.dart';
+import 'package:cuidame/app/data/models/patient/patient_model.dart';
 import 'package:cuidame/app/data/services/caregiver_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

@@ -24,7 +24,13 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
   @override
   Widget build(BuildContext context) {
     Widget circleButtonWithTitle(
-        String title, Color iconColor, Color backgroundColor, IconData icon, VoidCallback? onTap) {
+      String title,
+      Color iconColor,
+      Color backgroundColor,
+      IconData icon,
+      VoidCallback? onTap,
+      bool? loading,
+    ) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -37,9 +43,10 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
             icon: icon,
             iconColor: iconColor,
             backGroundColor: backgroundColor,
-            sizeCircle: 80,
+            sizeCircle: 60,
             sizeIcon: 42,
             onTap: onTap,
+            loading: loading ?? false,
           ),
         ],
       );
@@ -56,10 +63,9 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
             const SizedBox(height: Spacements.L),
             Obx(
               () => ProfilePhoto(
-                profilePhoto: controller.profilePhoto.value,
-                onFile: (file) {
-                  controller.profilePhoto.value = file;
-                },
+                profilePhotoUrl: controller.patient.value?.avatar,
+                loading: controller.loadingPatientPhoto.value,
+                onFile: controller.uploadProfilePhoto,
               ),
             ),
             const SizedBox(height: Spacements.S),
@@ -77,32 +83,38 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
                   AppColors.light,
                   AppColors.midGray,
                   Icons.qr_code_2,
-                  () {},
+                  controller.linkPatientDevice,
+                  false,
                 ),
-                circleButtonWithTitle(
-                  'Excluir Paciente',
-                  AppColors.light,
-                  AppColors.error,
-                  Icons.delete_forever,
-                  () {},
+                Obx(
+                  () => circleButtonWithTitle(
+                    'Excluir Paciente',
+                    AppColors.light,
+                    AppColors.error,
+                    Icons.delete_forever,
+                    controller.deletePatient,
+                    controller.loadingDelete.value,
+                  ),
                 ),
-                circleButtonWithTitle(
-                  'Salvar Alterações',
-                  AppColors.light,
-                  AppColors.success,
-                  Icons.save_outlined,
-                  () {},
-                ),
+                Obx(
+                  () => circleButtonWithTitle(
+                    'Salvar Alterações',
+                    AppColors.light,
+                    AppColors.success,
+                    Icons.save_outlined,
+                    controller.formValidate ? controller.submit : null,
+                    controller.loadingSubmit.value,
+                  ),
+                )
               ],
             ),
             const SizedBox(height: Spacements.M),
             CustomTextFormField(
-              keyboardType: TextInputType.emailAddress,
               title: 'Nome',
               hintText: 'Digite seu nome',
-              initialValue: controller.name.value,
+              initialValue: controller.patient.value?.name,
               onChanged: (value) {
-                controller.name.value = value.isNotEmpty ? value : null;
+                controller.patient.value?.name = value.isNotEmpty ? value : null;
               },
               errorText: controller.validateName,
             ),
@@ -115,9 +127,9 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
                     hintText: 'Selecione uma data',
                     dateOnly: true,
                     disableFutureDate: true,
-                    initialDate: controller.dateOfBirth.value,
+                    initialDate: controller.patient.value?.birthDate,
                     onChange: (value) {
-                      controller.dateOfBirth.value = value;
+                      controller.patient.value?.birthDate = value;
                     },
                   ),
                 ),
@@ -129,14 +141,15 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
                     onChanged: controller.onChangeGender,
                     items: [
                       CustomDropdownItem(
-                        text: 'Feminino',
+                        text: 'Masculino',
                         value: 0,
                       ),
                       CustomDropdownItem(
-                        text: 'Masculino',
+                        text: 'Feminino',
                         value: 1,
                       ),
                     ],
+                    value: controller.patient.value?.sex,
                   ),
                 ),
               ],

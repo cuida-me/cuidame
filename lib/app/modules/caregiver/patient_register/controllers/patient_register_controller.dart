@@ -1,5 +1,5 @@
 import 'package:cuidame/app/configs/constants/toast_type.dart';
-import 'package:cuidame/app/data/models/patient_model.dart';
+import 'package:cuidame/app/data/models/patient/patient_model.dart';
 import 'package:cuidame/app/data/repositories/caregiver_repository.dart';
 import 'package:cuidame/app/data/repositories/firebase_storage_repository.dart';
 import 'package:cuidame/app/data/services/caregiver_service.dart';
@@ -68,11 +68,11 @@ class PatientRegisterController extends GetxController {
     _caregiverRepository.createPatient(patient).then((value) {
       if (value) {
         _caregiverService.getPatient();
-        Get.toNamed(Routes.patientConnect);
+        Get.offAndToNamed(Routes.patientConnect);
         Utils.toast(
           'Paciente criado com sucesso',
           'Agora vamos conectar',
-          ToastType.success,
+          ToastType.error,
         );
       }
     }).catchError((err) {

@@ -1,7 +1,7 @@
 import 'package:cuidame/app/configs/theme/app_theme_style.dart';
 import 'package:cuidame/app/data/providers/dependences_injector.dart';
+import 'package:cuidame/app/data/services/caregiver_login_service.dart';
 import 'package:cuidame/app/data/services/local_notification_service.dart';
-import 'package:cuidame/app/data/services/user_login_service.dart';
 import 'package:cuidame/app/router/router.dart';
 import 'package:cuidame/app/router/routes.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +30,7 @@ class App extends StatelessWidget {
       routes: CustomRouter.routes,
       initialRoute: Routes.init,
       onInit: () {
-        DependencesInjector.get<UserLoginService>();
+        DependencesInjector.get<CaregiverLoginService>();
         DependencesInjector.get<LocalNotificationService>();
 
         // notificationService.createNotificationSchedulingMedication(

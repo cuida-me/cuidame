@@ -6,6 +6,7 @@ import 'package:cuidame/app/configs/constants/spacements.dart';
 import 'package:cuidame/app/configs/theme/app_color_style.dart';
 import 'package:cuidame/app/data/providers/dependences_injector.dart';
 import 'package:cuidame/app/router/routes.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class CaregiverAppBar extends StatelessWidget implements PreferredSize {
   final AppBar appBar;
@@ -30,10 +31,13 @@ class CaregiverAppBar extends StatelessWidget implements PreferredSize {
               onTap: () {
                 Get.toNamed(Routes.myProfile);
               },
+              customBorder: const CircleBorder(),
               child: CircleAvatar(
                 backgroundColor: AppColors.primary,
                 backgroundImage: caregiverService.caregiver != null
-                    ? Image.network(caregiverService.caregiver?.avatar ?? '').image
+                    ? CachedNetworkImageProvider(
+                        caregiverService.caregiver?.avatar ?? '',
+                      )
                     : null,
                 radius: 24,
               ),
@@ -64,7 +68,8 @@ class CaregiverAppBar extends StatelessWidget implements PreferredSize {
       ),
       centerTitle: false,
       titleSpacing: Spacements.M,
-      backgroundColor: Colors.transparent,
+      toolbarHeight: 200,
+      backgroundColor: AppColors.light,
       forceMaterialTransparency: true,
       automaticallyImplyLeading: false,
     );
@@ -74,5 +79,5 @@ class CaregiverAppBar extends StatelessWidget implements PreferredSize {
   Widget get child => throw UnimplementedError();
 
   @override
-  Size get preferredSize => Size.fromHeight(appBar.toolbarHeight ?? appBar.preferredSize.height);
+  Size get preferredSize => Size.fromHeight(appBar.toolbarHeight ?? appBar.preferredSize.height * 1.2);
 }

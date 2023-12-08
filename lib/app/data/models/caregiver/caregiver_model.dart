@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:cuidame/app/data/models/patient_model.dart';
+import 'package:cuidame/app/data/models/patient/patient_model.dart';
 
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class CaregiverModel {

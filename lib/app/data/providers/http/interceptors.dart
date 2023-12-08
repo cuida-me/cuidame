@@ -1,16 +1,16 @@
 import 'package:cuidame/app/data/providers/dependences_injector.dart';
-import 'package:cuidame/app/data/services/user_login_service.dart';
+import 'package:cuidame/app/data/services/caregiver_login_service.dart';
 import 'package:cuidame/app/utils/utils_logger.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 import 'package:http_interceptor/models/interceptor_contract.dart';
 
 class CaregiverInterceptor extends InterceptorContract {
-  late UserLoginService _userLoginService;
+  late CaregiverLoginService _caregiverLoginService;
   final type = 'caregiver';
 
   CaregiverInterceptor() {
-    _userLoginService = DependencesInjector.get<UserLoginService>();
+    _caregiverLoginService = DependencesInjector.get<CaregiverLoginService>();
   }
 
   @override
@@ -19,7 +19,7 @@ class CaregiverInterceptor extends InterceptorContract {
       UtilsLogger().i('HTTP CALL: ${request.url}');
     }
 
-    final userToken = await _userLoginService.userToken;
+    final userToken = await _caregiverLoginService.userToken;
     if (userToken != null) {
       request.headers['Authorization'] = userToken;
       request.headers['Type'] = 'caregiver';
@@ -30,7 +30,7 @@ class CaregiverInterceptor extends InterceptorContract {
   @override
   Future<BaseResponse> interceptResponse({required BaseResponse response}) async {
     if (response.statusCode == 401) {
-      _userLoginService.signOut();
+      _caregiverLoginService.signOut();
     }
 
     if (response.statusCode == 400) {

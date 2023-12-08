@@ -11,20 +11,22 @@ class CircleButton extends StatelessWidget {
     this.icon,
     this.iconColor,
     this.backGroundColor,
-    this.sizeCircle,
+    this.sizeCircle = 40,
     this.sizeIcon,
     this.elevation,
     this.padding,
+    this.loading = false,
   });
 
   final VoidCallback? onTap;
   final IconData? icon;
   final Color? iconColor;
   final Color? backGroundColor;
-  final double? sizeCircle;
+  final double sizeCircle;
   final double? sizeIcon;
   final double? elevation;
   final EdgeInsets? padding;
+  final bool loading;
 
   @override
   Widget build(BuildContext context) {
@@ -35,12 +37,19 @@ class CircleButton extends StatelessWidget {
         shape: const CircleBorder(),
         elevation: elevation ?? 0,
         padding: padding ?? const EdgeInsets.all(Spacements.XS),
+        fixedSize: Size(sizeCircle, sizeCircle),
       ),
-      child: Icon(
-        icon,
-        color: iconColor,
-        size: sizeIcon,
-      ),
+      child: loading
+          ? const Center(
+              child: CircularProgressIndicator(
+                color: AppColors.light,
+              ),
+            )
+          : Icon(
+              icon,
+              color: iconColor,
+              size: sizeIcon,
+            ),
     );
   }
 }

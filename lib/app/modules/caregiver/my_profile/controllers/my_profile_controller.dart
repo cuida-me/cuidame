@@ -1,15 +1,15 @@
 import 'package:cuidame/app/configs/constants/toast_type.dart';
 import 'package:cuidame/app/data/models/caregiver/caregiver_update_model.dart';
 import 'package:cuidame/app/data/repositories/firebase_storage_repository.dart';
+import 'package:cuidame/app/data/services/caregiver_login_service.dart';
 import 'package:cuidame/app/data/services/caregiver_service.dart';
-import 'package:cuidame/app/data/services/user_login_service.dart';
 import 'package:cuidame/app/utils/utils.dart';
 import 'package:cuidame/app/utils/utils_logger.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class MyProfileController extends GetxController {
-  final UserLoginService _userLoginService;
+  final CaregiverLoginService _caregiverLoginService;
   final CaregiverService _caregiverService;
   final FirebaseStorageRepository _firebaseStorageRepository;
 
@@ -22,7 +22,7 @@ class MyProfileController extends GetxController {
   final loading = false.obs;
 
   MyProfileController(
-    this._userLoginService,
+    this._caregiverLoginService,
     this._caregiverService,
     this._firebaseStorageRepository,
   );
@@ -92,6 +92,6 @@ class MyProfileController extends GetxController {
   }
 
   void signOut() {
-    _userLoginService.signOut();
+    _caregiverLoginService.signOut();
   }
 }

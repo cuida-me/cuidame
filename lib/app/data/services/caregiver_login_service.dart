@@ -1,21 +1,32 @@
 import 'dart:async';
 
+import 'package:cuidame/app/data/services/caregiver_service.dart';
 import 'package:cuidame/app/router/routes.dart';
 import 'package:cuidame/app/utils/utils_logger.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
-class UserLoginService {
-  final _user = Rxn<User>();
+class CaregiverLoginService {
+  final CaregiverService _caregiverService;
 
-  UserLoginService() {
-    initAuthListen();
+  final _userFirebase = Rxn<User>();
+
+  CaregiverLoginService(this._caregiverService) {
+    loadUserLogin();
   }
 
-  initAuthListen() {
+  User? get user => _userFirebase.value;
+
+  String get userUid => _userFirebase.value?.uid ?? '';
+
+  bool get isAuthenticated => _userFirebase.value != null;
+
+  Future<String?> get userToken async => await _userFirebase.value?.getIdToken();
+
+  loadUserLogin() {
     FirebaseAuth.instance.authStateChanges().listen((value) async {
-      _user.value = value;
+      _userFirebase.value = value;
 
       if (value != null) {
         var token = await value.getIdToken();
@@ -23,6 +34,7 @@ class UserLoginService {
         if (kDebugMode) UtilsLogger().i('User Token: $token');
 
         if (value.emailVerified) {
+          await _caregiverService.init();
           Get.offAllNamed(Routes.navigation);
         } else {
           Get.offAllNamed(Routes.confirmEmail);
@@ -35,29 +47,21 @@ class UserLoginService {
 
   listenEmailVerify() {
     Timer.periodic(const Duration(seconds: 1), (timer) async {
-      if (_user.value == null) {
+      if (_userFirebase.value == null) {
         timer.cancel();
       }
-      await _user.value?.reload();
+      await _userFirebase.value?.reload();
       final user = FirebaseAuth.instance.currentUser;
 
       if (user != null && user.emailVerified) {
         timer.cancel();
-        _user.value = user;
+        _userFirebase.value = user;
         Get.offAllNamed(Routes.navigation);
       }
     });
   }
 
-  User? get user => _user.value;
-
-  String get userUid => _user.value?.uid ?? '';
-
-  bool get isAuthenticated => _user.value != null;
-
-  Future<String?> get userToken async => await _user.value?.getIdToken();
-
-  void signOut() {
+  signOut() {
     FirebaseAuth.instance.signOut();
   }
 }

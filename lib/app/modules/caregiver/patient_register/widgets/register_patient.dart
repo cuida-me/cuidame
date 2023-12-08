@@ -94,7 +94,7 @@ class RegisterPatient extends StatelessWidget {
             ),
           ],
         ),
-        const Spacer(),
+        const SizedBox(width: Spacements.S),
         Obx(
           () => Expanded(
             child: PrimaryButton(

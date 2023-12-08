@@ -4,7 +4,6 @@ import 'package:cuidame/app/router/routes.dart';
 import 'package:cuidame/app/utils/utils.dart';
 import 'package:cuidame/app/utils/utils_notification.dart';
 import 'package:get/get.dart';
-import 'package:get/route_manager.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class LocalNotificationService {
