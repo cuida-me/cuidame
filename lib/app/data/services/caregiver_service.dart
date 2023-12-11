@@ -4,6 +4,7 @@ import 'package:cuidame/app/data/models/medication/medication_create_model.dart'
 import 'package:cuidame/app/data/models/medication/medication_type_model.dart';
 import 'package:cuidame/app/data/models/patient/patient_model.dart';
 import 'package:cuidame/app/data/models/patient/patient_update_model.dart';
+import 'package:cuidame/app/data/models/scheduling_day_model.dart';
 import 'package:cuidame/app/data/repositories/caregiver_repository.dart';
 import 'package:cuidame/app/utils/utils_logger.dart';
 import 'package:get/get.dart';
@@ -14,6 +15,7 @@ class CaregiverService {
   final _caregiver = Rxn<CaregiverModel>();
   final _patient = Rxn<PatientModel>();
   final _medicationTypes = Rxn<List<MedicationTypeModel>>();
+  final _schedulingWeek = Rxn<List<SchedulingDayModel>>();
 
   final _loading = false.obs;
 
@@ -25,11 +27,15 @@ class CaregiverService {
   PatientModel? get patient => _patient.value;
   bool get loading => _loading.value;
   List<MedicationTypeModel>? get medicationTypes => _medicationTypes.value;
+  List<SchedulingDayModel>? get schedulingWeek => _schedulingWeek.value;
 
   init() async {
     _loading.value = true;
-    await getMyProfile();
-    await retrieveMedicationTypes();
+    await Future.wait([
+      getMyProfile(),
+      retrieveMedicationTypes(),
+      retrieveSchedulingWeek(),
+    ]);
     _loading.value = false;
   }
 
@@ -80,6 +86,14 @@ class CaregiverService {
 
   Future retrieveMedicationTypes() async {
     _medicationTypes.value = await _caregiverRepository.retrieveMedicationTypes();
+  }
+
+  Future retrieveSchedulingWeek() async {
+    await _caregiverRepository.retrieveSchedulingWeek().then((value) {
+      _schedulingWeek.value = value;
+    }).catchError((err) {
+      UtilsLogger().e(err);
+    });
   }
 
   Future createMedication(MedicationCreateModel medication) async {

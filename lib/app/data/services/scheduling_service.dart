@@ -9,11 +9,11 @@ class SchedulingService {
   SchedulingService(this._localNotificationService);
 
   Future scheduleMedication(SchedulingModel scheduling) async {
-    final exist = await _localNotificationService.checkSchedulingExist(int.parse(scheduling.id));
+    final exist = await _localNotificationService.checkSchedulingExist(scheduling.id);
     if (!exist) {
       if (scheduling.medicationTime != null) {
         await _localNotificationService.createScheduleNotification(
-          int.parse(scheduling.id),
+          scheduling.id,
           'Está na hora da medicação',
           '${scheduling.name} - ${scheduling.quantity} ${scheduling.dosage}',
           scheduling.medicationTime!,

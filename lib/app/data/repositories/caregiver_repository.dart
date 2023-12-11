@@ -7,6 +7,7 @@ import 'package:cuidame/app/data/models/medication/medication_model.dart';
 import 'package:cuidame/app/data/models/medication/medication_type_model.dart';
 import 'package:cuidame/app/data/models/patient/patient_model.dart';
 import 'package:cuidame/app/data/models/patient/patient_update_model.dart';
+import 'package:cuidame/app/data/models/scheduling_day_model.dart';
 import 'package:cuidame/app/data/providers/http/http_client.dart';
 import 'package:cuidame/app/utils/utils.dart';
 
@@ -22,6 +23,7 @@ abstract class CaregiverRepository {
   Future<bool> linkPatientDevice(String token);
   Future<List<MedicationTypeModel>> retrieveMedicationTypes();
   Future<MedicationModel> createMedication(MedicationCreateModel medication);
+  Future<List<SchedulingDayModel>> retrieveSchedulingWeek();
 }
 
 class CaregiverRepositoryImpl implements CaregiverRepository {
@@ -118,5 +120,16 @@ class CaregiverRepositoryImpl implements CaregiverRepository {
     );
 
     return MedicationModel.fromJson(res.body);
+  }
+
+  @override
+  Future<List<SchedulingDayModel>> retrieveSchedulingWeek() async {
+    final res = await httpClientCaregiver.get(
+      Uri.https(Utils.apiUrlBase, 'scheduling/week'),
+    );
+
+    final resList = jsonDecode(const Utf8Decoder().convert(res.bodyBytes)) as List;
+
+    return resList.map((e) => SchedulingDayModel.fromMap(e)).toList();
   }
 }

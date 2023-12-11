@@ -12,7 +12,7 @@ void main() {
 
     final resList = dataJson.map((e) => SchedulingDayModel.fromMap(e)).toList();
     // ignore: avoid_print
-    print(resList[0].schedulings[0].medicationTime);
+    print(resList[0].schedulings?[0].medicationTime);
 
     final f = DateFormat('dd/MM/yyyy hh:mm');
 

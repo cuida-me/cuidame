@@ -13,6 +13,7 @@ class MedicationCard extends StatelessWidget {
   final VoidCallback? onTap;
   final Color? borderColor;
   final SchedulingMedicationType schedulingType;
+  final IconData icon;
 
   const MedicationCard({
     super.key,
@@ -20,6 +21,7 @@ class MedicationCard extends StatelessWidget {
     this.onTap,
     this.borderColor,
     this.schedulingType = SchedulingMedicationType.inTime,
+    this.icon = Icons.check,
   });
 
   @override
@@ -121,7 +123,7 @@ class MedicationCard extends StatelessWidget {
           const Spacer(),
           CircleButton(
             onTap: medicationTaken() ? () {} : onTap,
-            icon: Icons.check,
+            icon: icon,
             iconColor: textColor(),
             elevation: medicationTaken() ? 0 : 2,
             backGroundColor: bgColor(),

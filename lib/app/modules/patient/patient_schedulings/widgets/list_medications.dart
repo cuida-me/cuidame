@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cuidame/app/configs/constants/spacements.dart';
 import 'package:cuidame/app/configs/theme/app_color_style.dart';
 import 'package:cuidame/app/modules/patient/patient_schedulings/controllers/patient_schedulings_controller.dart';
-import 'package:cuidame/app/modules/patient/shared/widgets/medication_card.dart/medication_card.dart';
+import 'package:cuidame/app/shared/widgets/medication_card.dart';
 
 class ListMedications extends StatelessWidget {
   final PatientSchedulingsController controller;

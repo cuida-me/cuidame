@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:cuidame/app/data/models/scheduling_medication_type.dart';
-import 'package:cuidame/app/utils/utils_datetime.dart';
 
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class SchedulingDayModel {
@@ -10,7 +9,8 @@ class SchedulingDayModel {
   String monthName;
   DateTime? date;
   int dayWeek;
-  List<SchedulingModel> schedulings;
+  List<String>? dayColors;
+  List<SchedulingModel>? schedulings;
 
   SchedulingDayModel({
     required this.day,
@@ -18,6 +18,7 @@ class SchedulingDayModel {
     required this.monthName,
     required this.date,
     required this.dayWeek,
+    required this.dayColors,
     required this.schedulings,
   });
 
@@ -26,9 +27,10 @@ class SchedulingDayModel {
       'day': day,
       'day_name': dayName,
       'month_name': monthName,
-      'date': date?.toUtc().toIso8601String(),
+      'date': date?.toIso8601String(),
       'day_week': dayWeek,
-      'schedulings': schedulings.map((x) => x.toMap()).toList(),
+      'day_colors': dayColors,
+      'schedulings': schedulings?.map((x) => x.toMap()).toList(),
     };
   }
 
@@ -37,13 +39,16 @@ class SchedulingDayModel {
       day: map['day'] as int,
       dayName: map['day_name'] as String,
       monthName: map['month_name'] as String,
-      date: UtilsDateTime.formatToLocal(map['date']),
+      date: map['date'] != null ? DateTime.tryParse(map['date'] as String) : null,
       dayWeek: map['day_week'] as int,
-      schedulings: List<SchedulingModel>.from(
-        (map['schedulings'] as List<dynamic>).map<SchedulingModel>(
-          (x) => SchedulingModel.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
+      dayColors: map['day_colors'] != null ? List<String>.from(map['day_colors'] as List<dynamic>) : null,
+      schedulings: map['schedulings'] != null
+          ? List<SchedulingModel>.from(
+              (map['schedulings'] as List<dynamic>).map<SchedulingModel?>(
+                (x) => SchedulingModel.fromMap(x as Map<String, dynamic>),
+              ),
+            )
+          : null,
     );
   }
 
@@ -54,7 +59,7 @@ class SchedulingDayModel {
 }
 
 class SchedulingModel {
-  String id;
+  int id;
   String name;
   DateTime? medicationTime;
   DateTime? medicationTakenTime;
@@ -62,6 +67,8 @@ class SchedulingModel {
   int quantity;
   String status;
   String image;
+  String color;
+  String medicationType;
   SchedulingMedicationType type;
 
   SchedulingModel({
@@ -73,6 +80,8 @@ class SchedulingModel {
     required this.quantity,
     required this.status,
     required this.image,
+    required this.color,
+    required this.medicationType,
     this.type = SchedulingMedicationType.inTime,
   });
 
@@ -80,25 +89,30 @@ class SchedulingModel {
     return <String, dynamic>{
       'id': id,
       'name': name,
-      'medication_time': medicationTime?.toUtc().toIso8601String(),
-      'medication_taken_time': medicationTakenTime?.toUtc().toIso8601String(),
+      'medication_time': medicationTime?.toIso8601String(),
+      'medication_taken_time': medicationTakenTime?.toIso8601String(),
       'dosage': dosage,
       'quantity': quantity,
       'status': status,
       'image': image,
+      'color': color,
+      'medication_type': medicationType,
     };
   }
 
   factory SchedulingModel.fromMap(Map<String, dynamic> map) {
     return SchedulingModel(
-      id: map['id'] as String,
+      id: map['id'] as int,
       name: map['name'] as String,
-      medicationTime: UtilsDateTime.formatToLocal(map['medication_time']),
-      medicationTakenTime: UtilsDateTime.formatToLocal(map['medication_taken_time']),
+      medicationTime: map['medication_time'] != null ? DateTime.tryParse(map['medication_time'] as String) : null,
+      medicationTakenTime:
+          map['medication_taken_time'] != null ? DateTime.tryParse(map['medication_taken_time'] as String) : null,
       dosage: map['dosage'] as String,
       quantity: map['quantity'] as int,
       status: map['status'] as String,
       image: map['image'] as String,
+      color: map['color'] as String,
+      medicationType: map['medication_type'] as String,
     );
   }
 

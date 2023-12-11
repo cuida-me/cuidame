@@ -40,7 +40,7 @@ class PatientSchedulingsController extends GetxController {
         schedule.value = value.firstWhereOrNull((e) => UtilsDateTime.isSameDay(e.date, currentDate));
 
         await _schedulingService.cancelAllSchedules();
-        schedule.value?.schedulings.forEach((e) {
+        schedule.value?.schedulings?.forEach((e) {
           _schedulingService.scheduleMedication(e);
         });
 
@@ -51,13 +51,13 @@ class PatientSchedulingsController extends GetxController {
     }).whenComplete(() => loading(false));
   }
 
-  void medicationTaken(int dayWeek, String idScheduling) {
+  void medicationTaken(int dayWeek, int idScheduling) {
     schedulings.value?.firstWhere((e) => e.id == idScheduling).medicationTakenTime = DateTime.now();
     _sortSchedulings();
   }
 
   SchedulingModel? getScheduling(int dayWeek, String idScheduling) {
-    final scheduling = schedules.value?.firstWhere((e) => e.dayWeek == dayWeek).schedulings.firstWhere(
+    final scheduling = schedules.value?.firstWhere((e) => e.dayWeek == dayWeek).schedulings?.firstWhere(
           (e) => e.id == idScheduling,
         );
     return scheduling;
@@ -79,7 +79,7 @@ class PatientSchedulingsController extends GetxController {
   }
 
   void _sortSchedulings() {
-    schedulings.value = schedule.value?.schedulings.map((e) {
+    schedulings.value = schedule.value?.schedulings?.map((e) {
       if (e.medicationTakenTime != null) {
         e.type = SchedulingMedicationType.taken;
       } else if (_isSchedulingInTime(e.medicationTime)) {
