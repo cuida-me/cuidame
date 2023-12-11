@@ -72,7 +72,7 @@ class PatientRegisterController extends GetxController {
         Utils.toast(
           'Paciente criado com sucesso',
           'Agora vamos conectar',
-          ToastType.error,
+          ToastType.success,
         );
       }
     }).catchError((err) {
