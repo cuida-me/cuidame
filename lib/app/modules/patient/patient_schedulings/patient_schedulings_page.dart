@@ -6,6 +6,7 @@ import 'package:cuidame/app/modules/patient/patient_schedulings/widgets/list_med
 import 'package:cuidame/app/modules/patient/patient_schedulings/widgets/no_medication.dart';
 import 'package:cuidame/app/modules/patient/shared/widgets/patient_app_bar.dart';
 import 'package:cuidame/app/shared/gutter.dart';
+import 'package:cuidame/app/shared/widgets/loading_widget.dart';
 import 'package:cuidame/app/shared/widgets/week_patient.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,41 +22,38 @@ class _PatientSchedulingsPageState extends State<PatientSchedulingsPage> {
   final controller = DependencesInjector.get<PatientSchedulingsController>();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.light,
-      appBar: PatientAppBar(
-        appBar: AppBar(),
-        subTitle: Text(
-          'Vamos verificar seu plano para hoje',
-          style: Theme.of(context).textTheme.bodyMedium,
-        ),
-      ),
-      body: SafeArea(
-        child: Gutter(
-          hidePaddingBottom: true,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Obx(
-                () => controller.loading.value
-                    ? const CircularProgressIndicator()
-                    : WeekPatient(schedulingDayModel: controller.schedules.value),
-              ),
-              const SizedBox(height: Spacements.L),
-              Expanded(
-                child: Obx(
-                  () => !controller.loading.value && controller.isSchedulings
-                      ? ListMedications(controller: controller)
-                      : controller.loading.value
-                          ? const Center(child: CircularProgressIndicator())
-                          : const NoMedication(),
+    return Obx(
+      () => !controller.loading.value
+          ? Scaffold(
+              backgroundColor: AppColors.light,
+              appBar: PatientAppBar(
+                appBar: AppBar(),
+                subTitle: Text(
+                  'Vamos verificar seu plano para hoje',
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
-            ],
-          ),
-        ),
-      ),
+              body: SafeArea(
+                child: Gutter(
+                  hidePaddingBottom: true,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      WeekPatient(schedulingDayModel: controller.schedules.value),
+                      const SizedBox(height: Spacements.L),
+                      Expanded(
+                        child: Obx(
+                          () =>
+                              controller.isSchedulings ? ListMedications(controller: controller) : const NoMedication(),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )
+          : const LoadingWidget(),
     );
   }
 }

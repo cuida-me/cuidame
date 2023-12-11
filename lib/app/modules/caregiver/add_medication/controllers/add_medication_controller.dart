@@ -1,20 +1,65 @@
+import 'package:cuidame/app/configs/constants/toast_type.dart';
+import 'package:cuidame/app/data/models/medication/medication_create_model.dart';
+import 'package:cuidame/app/data/models/medication/medication_type_model.dart';
+import 'package:cuidame/app/data/models/scheduling/schedule_selected_model.dart';
+import 'package:cuidame/app/data/repositories/firebase_storage_repository.dart';
+import 'package:cuidame/app/data/services/caregiver_service.dart';
+import 'package:cuidame/app/utils/utils.dart';
+import 'package:cuidame/app/utils/utils_logger.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AddMedicationController extends GetxController {
+  final CaregiverService _caregiverService;
+  final FirebaseStorageRepository _firebaseStorageRepository;
+
+  final medicationPhoto = RxnString();
   final medicationName = RxnString();
-  final dosage = RxnInt();
-  final dosageType = RxnString();
+  final dosage = RxnString();
+  final dosageType = RxnInt();
   final timeSchedulers = Rx<List<TimeOfDay>>([]);
-  final daysSelected = Rx<List<int>>([]);
+  final daysSelected = Rx<List<ScheduleSelectedModel>>(
+    [
+      ScheduleSelectedModel(dailyOfWeek: 0, enabled: false),
+      ScheduleSelectedModel(dailyOfWeek: 1, enabled: false),
+      ScheduleSelectedModel(dailyOfWeek: 2, enabled: false),
+      ScheduleSelectedModel(dailyOfWeek: 3, enabled: false),
+      ScheduleSelectedModel(dailyOfWeek: 4, enabled: false),
+      ScheduleSelectedModel(dailyOfWeek: 5, enabled: false),
+      ScheduleSelectedModel(dailyOfWeek: 6, enabled: false),
+    ],
+  );
+
+  final loading = false.obs;
+  final loadingMedicationPhoto = false.obs;
+
+  AddMedicationController(this._caregiverService, this._firebaseStorageRepository);
 
   bool get formValidate {
-    if (medicationName.value == null || dosage.value == null || dosageType.value == null) return false;
+    if (medicationName.value == null ||
+        dosage.value == null ||
+        dosageType.value == null ||
+        loadingMedicationPhoto.value) return false;
 
     return true;
   }
 
-  void onChangeDosageType(value) {}
+  List<MedicationTypeModel>? get medicationTypes => _caregiverService.medicationTypes;
+
+  void onChangeDosageType(value) {
+    dosageType.value = value;
+  }
+
+  void uploadMedicationPhoto(XFile? file) {
+    if (file == null) return;
+    loadingMedicationPhoto.value = true;
+    _firebaseStorageRepository.uploadCaregiverProfilePhoto(file).then((value) {
+      medicationPhoto.value = value;
+    }).catchError((err) {
+      UtilsLogger().e(err);
+    }).whenComplete(() => loadingMedicationPhoto.value = false);
+  }
 
   void addTimeScheduler(TimeOfDay? time) {
     if (time != null) {
@@ -29,18 +74,47 @@ class AddMedicationController extends GetxController {
   }
 
   void selectDayWeek(int dayWeek) {
-    int? daySelected = daysSelected.value.firstWhereOrNull((dayWeekSelected) => dayWeek == dayWeekSelected);
+    var daySelected = daysSelected.value.firstWhereOrNull((e) => e.dailyOfWeek == dayWeek);
 
-    if (daySelected == null) {
-      daysSelected.value.add(dayWeek);
-    } else {
-      daysSelected.value.remove(dayWeek);
+    if (daySelected != null) {
+      daySelected.enabled = !(daySelected.enabled ?? true);
     }
+
     daysSelected.refresh();
   }
 
   bool dayWeekSelected(int dayWeek) {
-    int? daySelected = daysSelected.value.firstWhereOrNull((dayWeekSelected) => dayWeek == dayWeekSelected);
-    return daySelected != null;
+    var daySelected = daysSelected.value.firstWhereOrNull((e) => e.dailyOfWeek == dayWeek)?.enabled ?? false;
+    return daySelected;
+  }
+
+  void submit() {
+    var schedules = daysSelected.value
+        .map((e) => MedicationCreateDailySelectedModel(
+              dailyOfWeek: e.dailyOfWeek,
+              enabled: e.enabled,
+            ))
+        .toList();
+
+    var medication = MedicationCreateModel(
+      name: medicationName.value,
+      typeId: dosageType.value,
+      avatar: medicationPhoto.value,
+      quantity: int.parse(dosage.value ?? '0'),
+      times: timeSchedulers.value.map((e) => '${e.hour}:${e.minute}').toList(),
+      schedules: schedules,
+    );
+
+    loading.value = true;
+    _caregiverService.createMedication(medication).then((value) {
+      Get.back();
+      Utils.toast(
+        'Criado com sucesso',
+        'Medicacão cadastrada com sucesso',
+        ToastType.success,
+      );
+    }).catchError((err) {
+      UtilsLogger().e(err);
+    }).whenComplete(() => loading.value = false);
   }
 }

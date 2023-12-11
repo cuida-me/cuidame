@@ -125,7 +125,9 @@ class RegisterMedication extends StatelessWidget {
         ),
         const SizedBox(height: Spacements.L),
         ProfilePhoto(
-          onFile: (file) {},
+          onFile: controller.uploadMedicationPhoto,
+          profilePhotoUrl: controller.medicationPhoto.value,
+          loading: controller.loadingMedicationPhoto.value,
         ),
         const SizedBox(height: Spacements.M),
         CustomTextFormField(
@@ -145,36 +147,27 @@ class RegisterMedication extends StatelessWidget {
                 keyboardType: TextInputType.number,
                 title: 'Dosagem',
                 hintText: 'Digite a dosagem',
-                initialValue: controller.medicationName.value,
+                initialValue: controller.dosage.value,
                 onChanged: (value) {
-                  controller.medicationName.value = value.isNotEmpty ? value : null;
+                  controller.dosage.value = value.isNotEmpty ? value : null;
                 },
               ),
             ),
             const SizedBox(width: Spacements.S),
-            Expanded(
-              child: CustomDropdown(
-                title: 'Tipo',
-                hintText: 'Selecione o tipo da dosagem',
-                onChanged: controller.onChangeDosageType,
-                items: [
-                  CustomDropdownItem(
-                    text: 'Cápsula',
-                    value: 0,
-                  ),
-                  CustomDropdownItem(
-                    text: 'Comprimido',
-                    value: 1,
-                  ),
-                  CustomDropdownItem(
-                    text: 'Gotas',
-                    value: 2,
-                  ),
-                  CustomDropdownItem(
-                    text: 'ML',
-                    value: 3,
-                  ),
-                ],
+            Obx(
+              () => Expanded(
+                child: controller.medicationTypes?.isNotEmpty ?? false
+                    ? CustomDropdown(
+                        title: 'Tipo',
+                        hintText: 'Selecione o tipo da dosagem',
+                        onChanged: controller.onChangeDosageType,
+                        items: controller.medicationTypes
+                            ?.map(
+                              (e) => CustomDropdownItem(text: e.name ?? '', value: e.id),
+                            )
+                            .toList(),
+                      )
+                    : const SizedBox(),
               ),
             ),
           ],
@@ -199,7 +192,6 @@ class RegisterMedication extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: Spacements.S),
         Obx(
           () => Wrap(
             spacing: Spacements.XS,
@@ -223,6 +215,8 @@ class RegisterMedication extends StatelessWidget {
           () => Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              buttonDayOfWeek('Dom', 0),
+              const SizedBox(width: Spacements.XS),
               buttonDayOfWeek('Seg', 1),
               const SizedBox(width: Spacements.XS),
               buttonDayOfWeek('Ter', 2),
@@ -234,17 +228,18 @@ class RegisterMedication extends StatelessWidget {
               buttonDayOfWeek('Sex', 5),
               const SizedBox(width: Spacements.XS),
               buttonDayOfWeek('Sab', 6),
-              const SizedBox(width: Spacements.XS),
-              buttonDayOfWeek('Dom', 0),
             ],
           ),
         ),
         const SizedBox(height: Spacements.S),
-        PrimaryButton(
-          text: 'Salvar',
-          icon: Icons.arrow_forward,
-          expanded: true,
-          onPressed: () {},
+        Obx(
+          () => PrimaryButton(
+            text: 'Salvar',
+            icon: Icons.arrow_forward,
+            expanded: true,
+            onPressed: controller.formValidate ? controller.submit : null,
+            loading: controller.loading.value,
+          ),
         ),
       ],
     );

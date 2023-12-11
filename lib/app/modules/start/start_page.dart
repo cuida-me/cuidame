@@ -138,6 +138,7 @@ class _StartPageState extends State<StartPage> {
                 elevation: 1,
                 icon: Icons.qr_code_2,
                 sizeIcon: Spacements.L,
+                sizeCircle: 50,
               ),
             ),
           ],

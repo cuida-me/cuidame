@@ -142,7 +142,7 @@ class _MyProfilePageState extends State<MyProfilePage> {
                   const SizedBox(height: Spacements.XS),
                   Material(
                     child: InkWell(
-                      onTap: () {},
+                      onTap: controller.deleteMyAccount,
                       child: Padding(
                         padding: const EdgeInsets.all(Spacements.XXS),
                         child: Text(

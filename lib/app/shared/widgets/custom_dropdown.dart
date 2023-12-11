@@ -61,6 +61,7 @@ class CustomDropdown extends StatelessWidget {
           ),
           icon: const SizedBox(),
           dropdownColor: AppColors.light,
+          isExpanded: true,
           items: items
               ?.map(
                 (e) => DropdownMenuItem(
@@ -71,6 +72,8 @@ class CustomDropdown extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           color: enabled ?? true ? AppColors.black : AppColors.midGray,
                         ),
+                    overflow: TextOverflow.fade,
+                    softWrap: false,
                   ),
                 ),
               )

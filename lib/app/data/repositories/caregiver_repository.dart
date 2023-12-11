@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:cuidame/app/data/models/caregiver/caregiver_model.dart';
 import 'package:cuidame/app/data/models/caregiver/caregiver_update_model.dart';
+import 'package:cuidame/app/data/models/medication/medication_create_model.dart';
+import 'package:cuidame/app/data/models/medication/medication_model.dart';
+import 'package:cuidame/app/data/models/medication/medication_type_model.dart';
 import 'package:cuidame/app/data/models/patient/patient_model.dart';
 import 'package:cuidame/app/data/models/patient/patient_update_model.dart';
 import 'package:cuidame/app/data/providers/http/http_client.dart';
@@ -9,11 +14,14 @@ abstract class CaregiverRepository {
   Future<bool> registerCaregiver();
   Future<CaregiverModel> retrieveMyProfile();
   Future<CaregiverUpdateModel?> updateMyProfile(CaregiverUpdateModel caregiver);
-  Future retrievePatient();
+  Future<bool> deleteMyAccount();
+  Future<PatientModel?> retrievePatient();
   Future<bool> createPatient(PatientModel patient);
   Future<bool> updatePatient(PatientUpdateModel patient);
   Future<bool> deletePatient();
   Future<bool> linkPatientDevice(String token);
+  Future<List<MedicationTypeModel>> retrieveMedicationTypes();
+  Future<MedicationModel> createMedication(MedicationCreateModel medication);
 }
 
 class CaregiverRepositoryImpl implements CaregiverRepository {
@@ -37,6 +45,14 @@ class CaregiverRepositoryImpl implements CaregiverRepository {
     );
     if (res.statusCode == 200) return CaregiverUpdateModel.fromJson(res.body);
     return null;
+  }
+
+  @override
+  Future<bool> deleteMyAccount() async {
+    final res = await httpClientCaregiver.delete(
+      Uri.http(Utils.apiUrlBase, '/caregiver'),
+    );
+    return res.statusCode == 200;
   }
 
   @override
@@ -82,5 +98,25 @@ class CaregiverRepositoryImpl implements CaregiverRepository {
     );
 
     return res.statusCode == 200;
+  }
+
+  @override
+  Future<List<MedicationTypeModel>> retrieveMedicationTypes() async {
+    final res = await httpClientCaregiver.get(
+      Uri.https(Utils.apiUrlBase, 'medication/types'),
+    );
+    final resList = jsonDecode(const Utf8Decoder().convert(res.bodyBytes)) as List;
+
+    return resList.map((e) => MedicationTypeModel.fromMap(e)).toList();
+  }
+
+  @override
+  Future<MedicationModel> createMedication(MedicationCreateModel medication) async {
+    final res = await httpClientCaregiver.post(
+      Uri.https(Utils.apiUrlBase, 'medication'),
+      body: medication.toJson(),
+    );
+
+    return MedicationModel.fromJson(res.body);
   }
 }

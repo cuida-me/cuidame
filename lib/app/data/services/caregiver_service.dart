@@ -1,5 +1,7 @@
 import 'package:cuidame/app/data/models/caregiver/caregiver_model.dart';
 import 'package:cuidame/app/data/models/caregiver/caregiver_update_model.dart';
+import 'package:cuidame/app/data/models/medication/medication_create_model.dart';
+import 'package:cuidame/app/data/models/medication/medication_type_model.dart';
 import 'package:cuidame/app/data/models/patient/patient_model.dart';
 import 'package:cuidame/app/data/models/patient/patient_update_model.dart';
 import 'package:cuidame/app/data/repositories/caregiver_repository.dart';
@@ -11,18 +13,23 @@ class CaregiverService {
 
   final _caregiver = Rxn<CaregiverModel>();
   final _patient = Rxn<PatientModel>();
+  final _medicationTypes = Rxn<List<MedicationTypeModel>>();
 
   final _loading = false.obs;
 
-  CaregiverService(this._caregiverRepository);
+  CaregiverService(
+    this._caregiverRepository,
+  );
 
   CaregiverModel? get caregiver => _caregiver.value;
   PatientModel? get patient => _patient.value;
   bool get loading => _loading.value;
+  List<MedicationTypeModel>? get medicationTypes => _medicationTypes.value;
 
   init() async {
     _loading.value = true;
     await getMyProfile();
+    await retrieveMedicationTypes();
     _loading.value = false;
   }
 
@@ -39,6 +46,13 @@ class CaregiverService {
     final res = await _caregiverRepository.updateMyProfile(caregiver);
     if (res != null) {
       await getMyProfile();
+    }
+  }
+
+  Future deleteMyAccount() async {
+    final res = await _caregiverRepository.deleteMyAccount();
+    if (res) {
+      // _caregiverLoginService.signOut();
     }
   }
 
@@ -62,5 +76,13 @@ class CaregiverService {
 
   Future linkPatientDevice(String token) async {
     await _caregiverRepository.linkPatientDevice(token);
+  }
+
+  Future retrieveMedicationTypes() async {
+    _medicationTypes.value = await _caregiverRepository.retrieveMedicationTypes();
+  }
+
+  Future createMedication(MedicationCreateModel medication) async {
+    await _caregiverRepository.createMedication(medication);
   }
 }

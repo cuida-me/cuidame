@@ -7,6 +7,13 @@ class UtilsDateTime {
     return f.parse(datetime);
   }
 
+  static DateTime? formatToLocal(String? datetimeStr) {
+    if (datetimeStr == null) return null;
+    final datetime = DateTime.parse(datetimeStr);
+    final datetimeLocal = datetime.toLocal();
+    return datetimeLocal;
+  }
+
   static String? toFormatBr(DateTime? datetime) {
     if (datetime == null) return null;
     final f = DateFormat('dd/MM/yyyy HH:mm');

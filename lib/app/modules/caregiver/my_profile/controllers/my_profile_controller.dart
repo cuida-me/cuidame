@@ -94,4 +94,8 @@ class MyProfileController extends GetxController {
   void signOut() {
     _caregiverLoginService.signOut();
   }
+
+  void deleteMyAccount() {
+    _caregiverService.deleteMyAccount();
+  }
 }
