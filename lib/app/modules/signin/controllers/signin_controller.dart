@@ -1,3 +1,5 @@
+import 'package:cuidame/app/configs/constants/toast_type.dart';
+import 'package:cuidame/app/utils/utils.dart';
 import 'package:cuidame/app/utils/utils_logger.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -42,6 +44,11 @@ class SignInController extends GetxController {
         .then((value) {})
         .catchError((err) {
       UtilsLogger().e(err);
+      Utils.toast(
+        'Falha ao entrar',
+        'E-mail ou senha incorreto',
+        ToastType.error,
+      );
     }).whenComplete(() => loading(false));
   }
 }

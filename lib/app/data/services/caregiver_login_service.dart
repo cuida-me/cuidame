@@ -8,6 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 class CaregiverLoginService {
+  // ignore: unused_field
   final CaregiverService _caregiverService;
 
   final _userFirebase = Rxn<User>();
@@ -34,7 +35,6 @@ class CaregiverLoginService {
         if (kDebugMode) UtilsLogger().i('User Token: $token');
 
         if (value.emailVerified) {
-          await _caregiverService.init();
           Get.offAllNamed(Routes.navigation);
         } else {
           Get.offAllNamed(Routes.confirmEmail);

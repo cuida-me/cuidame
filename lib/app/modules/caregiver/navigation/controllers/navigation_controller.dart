@@ -6,7 +6,9 @@ import 'package:get/get.dart';
 class NavigationController extends GetxController with GetSingleTickerProviderStateMixin {
   final CaregiverService _caregiverService;
 
-  NavigationController(this._caregiverService);
+  NavigationController(this._caregiverService) {
+    _caregiverService.init();
+  }
 
   late TabController tabController;
 

@@ -28,7 +28,7 @@ class CaregiverModel {
     return <String, dynamic>{
       'id': id,
       'name': name,
-      'birth_date': birthDate?.toUtc().toIso8601String(),
+      'birthDate': birthDate?.millisecondsSinceEpoch,
       'avatar': avatar,
       'sex': sex,
       'email': email,
@@ -39,14 +39,14 @@ class CaregiverModel {
 
   factory CaregiverModel.fromMap(Map<String, dynamic> map) {
     return CaregiverModel(
-      id: map['id'] as int,
-      name: map['name'] as String,
-      birthDate: map['birth_date'] != null ? DateTime.tryParse(map['birth_date']) : null,
-      avatar: map['avatar'] as String,
-      sex: map['sex'] as int,
-      email: map['email'] as String,
-      status: map['status'] as String,
-      patient: map['patient'] != null ? PatientModel.fromMap(map['patient']) : null,
+      id: map['id'] != null ? map['id'] as int : null,
+      name: map['name'] != null ? map['name'] as String : null,
+      birthDate: map['birthDate'] != null ? DateTime.tryParse(map['birthDate'] as String) : null,
+      avatar: map['avatar'] != null ? map['avatar'] as String : null,
+      sex: map['sex'] != null ? map['sex'] as int : null,
+      email: map['email'] != null ? map['email'] as String : null,
+      status: map['status'] != null ? map['status'] as String : null,
+      patient: map['patient'] != null ? PatientModel.fromMap(map['patient'] as Map<String, dynamic>) : null,
     );
   }
 
