@@ -107,6 +107,7 @@ class AddMedicationController extends GetxController {
 
     loading.value = true;
     _caregiverService.createMedication(medication).then((value) {
+      _caregiverService.retrieveSchedulingWeek();
       Get.back();
       Utils.toast(
         'Criado com sucesso',
