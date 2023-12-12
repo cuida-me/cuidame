@@ -43,26 +43,30 @@ class ScanQRCode extends StatelessWidget {
               () => SizedBox(
                 height: size.height * 0.4,
                 width: size.width * 0.3,
-                child: controller.loading
-                    ? Container(
+                child: Stack(
+                  children: [
+                    MobileScanner(
+                      controller: MobileScannerController(
+                        formats: [BarcodeFormat.qrCode],
+                      ),
+                      onDetect: (capture) {
+                        if (capture.barcodes.first.rawValue != null) {
+                          controller.onReadQRCode(capture.barcodes.first.rawValue!);
+                        }
+                      },
+                    ),
+                    if (controller.loading)
+                      Container(
                         decoration: BoxDecoration(
-                          color: AppColors.black.withOpacity(0.8),
+                          color: AppColors.black.withOpacity(0.4),
                         ),
                         child: const Center(
                             child: CircularProgressIndicator(
                           color: AppColors.light,
                         )),
-                      )
-                    : MobileScanner(
-                        controller: MobileScannerController(
-                          formats: [BarcodeFormat.qrCode],
-                        ),
-                        onDetect: (capture) {
-                          if (capture.barcodes.first.rawValue != null) {
-                            controller.onReadQRCode(capture.barcodes.first.rawValue!);
-                          }
-                        },
                       ),
+                  ],
+                ),
               ),
             ),
           ),
