@@ -4,23 +4,26 @@ import 'package:cuidame/app/data/repositories/firebase_storage_repository.dart';
 import 'package:cuidame/app/data/repositories/patient_repository.dart';
 import 'package:cuidame/app/data/repositories/schedulings_repository.dart';
 import 'package:cuidame/app/data/services/caregiver_login_service.dart';
+import 'package:cuidame/app/data/socket/socket_io_client.dart';
 
 void setupRepositoryInjections() {
-  DependencesInjector.registerFactory<SchedulesRepository>(
+  DependencesInjector.registerLazySingleton<SchedulesRepository>(
     () => SchedulesRepositoryImpl(),
   );
 
-  DependencesInjector.registerFactory<CaregiverRepository>(
+  DependencesInjector.registerLazySingleton<CaregiverRepository>(
     () => CaregiverRepositoryImpl(),
   );
 
-  DependencesInjector.registerFactory<FirebaseStorageRepository>(
+  DependencesInjector.registerLazySingleton<FirebaseStorageRepository>(
     () => FirebaseStorageRepositoryImpl(
       DependencesInjector.get<CaregiverLoginService>(),
     ),
   );
 
-  DependencesInjector.registerFactory<PatientRepository>(
-    () => PatientRepositoryImpl(),
+  DependencesInjector.registerLazySingleton<PatientRepository>(
+    () => PatientRepositoryImpl(
+      DependencesInjector.get<SocketIOClient>(),
+    ),
   );
 }

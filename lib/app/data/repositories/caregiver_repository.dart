@@ -24,6 +24,7 @@ abstract class CaregiverRepository {
   Future<List<MedicationTypeModel>> retrieveMedicationTypes();
   Future<MedicationModel> createMedication(MedicationCreateModel medication);
   Future<List<SchedulingDayModel>> retrieveSchedulingWeek();
+  Future<bool> patientLinkToDevice(String token);
 }
 
 class CaregiverRepositoryImpl implements CaregiverRepository {
@@ -131,5 +132,14 @@ class CaregiverRepositoryImpl implements CaregiverRepository {
     final resList = jsonDecode(const Utf8Decoder().convert(res.bodyBytes)) as List;
 
     return resList.map((e) => SchedulingDayModel.fromMap(e)).toList();
+  }
+
+  @override
+  Future<bool> patientLinkToDevice(String token) async {
+    final res = await httpClientCaregiver.post(
+      Uri.https(Utils.apiUrlBase, 'caregiver/patient/device/$token'),
+    );
+
+    return res.statusCode == 201;
   }
 }

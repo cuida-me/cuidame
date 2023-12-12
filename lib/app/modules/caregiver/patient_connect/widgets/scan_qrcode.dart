@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:cuidame/app/configs/theme/app_color_style.dart';
 import 'package:cuidame/app/modules/caregiver/patient_connect/controllers/patient_connect_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
 import 'package:cuidame/app/configs/constants/spacements.dart';
@@ -37,18 +39,30 @@ class ScanQRCode extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: Spacements.M),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
-            child: SizedBox(
-              height: size.height * 0.4,
-              width: size.width * 0.3,
-              child: MobileScanner(
-                controller: MobileScannerController(
-                  formats: [BarcodeFormat.qrCode],
-                ),
-                onDetect: (capture) {
-                  if (capture.barcodes.first.rawValue != null) {
-                    controller.onReadQRCode(capture.barcodes.first.rawValue!);
-                  }
-                },
+            child: Obx(
+              () => SizedBox(
+                height: size.height * 0.4,
+                width: size.width * 0.3,
+                child: controller.loading
+                    ? Container(
+                        decoration: BoxDecoration(
+                          color: AppColors.black.withOpacity(0.8),
+                        ),
+                        child: const Center(
+                            child: CircularProgressIndicator(
+                          color: AppColors.light,
+                        )),
+                      )
+                    : MobileScanner(
+                        controller: MobileScannerController(
+                          formats: [BarcodeFormat.qrCode],
+                        ),
+                        onDetect: (capture) {
+                          if (capture.barcodes.first.rawValue != null) {
+                            controller.onReadQRCode(capture.barcodes.first.rawValue!);
+                          }
+                        },
+                      ),
               ),
             ),
           ),

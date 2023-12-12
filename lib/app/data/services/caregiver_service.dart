@@ -99,4 +99,8 @@ class CaregiverService {
   Future createMedication(MedicationCreateModel medication) async {
     await _caregiverRepository.createMedication(medication);
   }
+
+  Future<bool> patientLinkToDevice(String token) async {
+    return await _caregiverRepository.linkPatientDevice(token);
+  }
 }

@@ -60,7 +60,7 @@ class _PatientQrCodePageState extends State<PatientQrCodePage> {
                       ),
                       const SizedBox(height: Spacements.XL),
                       Obx(
-                        () => controller.loading
+                        () => controller.loadingQrCode
                             ? const Center(child: CircularProgressIndicator())
                             : SizedBox(
                                 height: 250,
@@ -73,11 +73,14 @@ class _PatientQrCodePageState extends State<PatientQrCodePage> {
                               ),
                       ),
                       const SizedBox(height: Spacements.XL),
-                      PrimaryButton(
-                        onPressed: () => controller.refreshQrCode(),
-                        text: 'Atualizar',
-                        icon: Icons.replay_outlined,
-                        expanded: true,
+                      Obx(
+                        () => PrimaryButton(
+                          onPressed: () => controller.refreshQrCode(),
+                          text: 'Atualizar',
+                          icon: Icons.replay_outlined,
+                          expanded: true,
+                          loading: controller.loading,
+                        ),
                       ),
                     ],
                   ),

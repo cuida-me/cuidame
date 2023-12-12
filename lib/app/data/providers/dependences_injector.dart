@@ -4,6 +4,7 @@ import 'package:cuidame/app/data/providers/dependences/patient.dart';
 import 'package:cuidame/app/data/providers/dependences/repository.dart';
 import 'package:cuidame/app/data/providers/dependences/service.dart';
 import 'package:cuidame/app/data/providers/dependences/start.dart';
+import 'package:cuidame/app/data/providers/dependences/storage.dart';
 import 'package:get/get.dart';
 
 typedef FactoryFunc<T> = T Function();
@@ -39,5 +40,6 @@ class DependencesInjector {
     setupHomeInjections();
     setupMedicationInjections();
     setupPatientInjections();
+    setupStorageInjections();
   }
 }

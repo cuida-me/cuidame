@@ -7,10 +7,14 @@ import 'package:cuidame/app/data/services/local_notification_service.dart';
 import 'package:cuidame/app/data/services/patient_login_service.dart';
 import 'package:cuidame/app/data/services/patient_service.dart';
 import 'package:cuidame/app/data/services/scheduling_service.dart';
+import 'package:cuidame/app/data/storage/patient_token_storage.dart';
 
 void setupServiceInjection() {
   DependencesInjector.registerLazySingleton<PatientLoginService>(
-    () => PatientLoginService(),
+    () => PatientLoginService(
+      DependencesInjector.get<PatientRepository>(),
+      DependencesInjector.get<PatientTokenStorage>(),
+    ),
   );
 
   DependencesInjector.registerLazySingleton<CaregiverLoginService>(
@@ -38,6 +42,7 @@ void setupServiceInjection() {
   DependencesInjector.registerLazySingleton<PatientService>(
     () => PatientService(
       DependencesInjector.get<PatientRepository>(),
+      DependencesInjector.get<PatientTokenStorage>(),
     ),
   );
 }

@@ -1,34 +1,39 @@
 import 'dart:io';
 import 'package:cuidame/app/data/models/patient/patient_qr_model.dart';
-import 'package:cuidame/app/data/services/patient_service.dart';
+import 'package:cuidame/app/data/services/patient_login_service.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:get/get.dart';
 
 class PatientQrCodeController extends GetxController {
-  final PatientService _patientService;
+  final PatientLoginService _patientLoginService;
 
-  PatientQrCodeController(this._patientService) {
+  String? _deviceId;
+
+  PatientQrCodeController(this._patientLoginService) {
     initSocketConnection();
   }
 
-  String? get qrCode => _patientService.qrCode;
-  bool get loading => _patientService.qrCode == null;
+  String? get qrCode => _patientLoginService.qrCode;
+  bool get loadingQrCode => _patientLoginService.qrCode == null;
+  bool get loading => _patientLoginService.loading;
 
   void initSocketConnection() async {
     final deviceInfo = DeviceInfoPlugin();
-    String? id;
 
     if (Platform.isAndroid) {
       final androidInfo = await deviceInfo.androidInfo;
-      id = androidInfo.id;
+      _deviceId = androidInfo.id;
     }
 
-    _patientService.socketConnected().listen((e) {
-      _patientService.patientQrListen();
-      _patientService.patientQrConnect(PatientQrModel(deviceId: id!));
-      _patientService.patientFinishLoginListen();
+    _patientLoginService.socketConnected().listen((e) {
+      _patientLoginService.patientQrListen();
+      _patientLoginService.patientQrConnect(PatientQrModel(deviceId: _deviceId!));
+      _patientLoginService.patientFinishLoginListen();
     });
   }
 
-  void refreshQrCode() {}
+  void refreshQrCode() {
+    if (loading) return;
+    _patientLoginService.patientQrConnect(PatientQrModel(deviceId: _deviceId!));
+  }
 }

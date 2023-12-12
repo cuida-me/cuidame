@@ -1,54 +1,41 @@
 import 'dart:async';
 
+import 'package:cuidame/app/data/models/patient/patient_finish_login_model.dart';
 import 'package:cuidame/app/data/models/patient/patient_qr_model.dart';
 import 'package:cuidame/app/data/models/patient/patient_token_model.dart';
-import 'package:cuidame/app/utils/utils.dart';
-import 'package:cuidame/app/utils/utils_logger.dart';
+import 'package:cuidame/app/data/socket/socket_io_client.dart';
 // ignore: library_prefixes
-import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:socket_io_client/socket_io_client.dart';
 
 abstract class PatientRepository {
   Stream get socketConnected;
   Stream patientQrConnect(PatientQrModel patientQr);
   Stream<PatientTokenModel> patientQrListen();
-  Stream patientFinishLoginListen();
+  Stream<PatientFinishLoginModel> patientFinishLoginListen();
 }
 
 class PatientRepositoryImpl implements PatientRepository {
-  IO.Socket socket = IO.io('https://${Utils.apiUrlBase}', {
-    'autoConnect': true,
-    'transports': ['websocket']
-  });
+  final SocketIOClient _socketClient;
+  Socket? _socket;
 
-  final _socketConnectedStream = StreamController<bool>();
-
-  PatientRepositoryImpl() {
-    _initSocket();
+  PatientRepositoryImpl(this._socketClient) {
+    _socket = _socketClient.socket;
   }
 
   @override
-  Stream get socketConnected => _socketConnectedStream.stream;
-
-  _initSocket() {
-    socket.onConnect((_) {
-      UtilsLogger().i('Connected Socket IO');
-      _socketConnectedStream.add(true);
-    });
-    socket.onDisconnect((data) => UtilsLogger().w(data));
-    socket.onError((err) => UtilsLogger().e(err));
-  }
+  Stream get socketConnected => _socketClient.socketConnected;
 
   @override
   Stream patientQrConnect(PatientQrModel patientQr) {
     final streamController = StreamController();
-    socket.emit('patient-qr', patientQr.toMap());
+    _socket?.emit('patient-qr', patientQr.toMap());
     return streamController.stream;
   }
 
   @override
   Stream<PatientTokenModel> patientQrListen() {
     final streamController = StreamController<PatientTokenModel>();
-    socket.on('patient-qr', (data) {
+    _socket?.on('patient-qr', (data) {
       final token = PatientTokenModel.fromMap(data);
       streamController.add(token);
     });
@@ -56,11 +43,14 @@ class PatientRepositoryImpl implements PatientRepository {
   }
 
   @override
-  Stream patientFinishLoginListen() {
-    final streamController = StreamController();
-    socket.on('finishi-login', (data) {
-      streamController.add(data);
+  Stream<PatientFinishLoginModel> patientFinishLoginListen() {
+    final streamController = StreamController<PatientFinishLoginModel>();
+    _socket?.on('finish-login', (data) {
+      final finishLogin = PatientFinishLoginModel.fromMap(data);
+      streamController.add(finishLogin);
     });
     return streamController.stream;
   }
+
+  Future retrieveMyProfile() async {}
 }

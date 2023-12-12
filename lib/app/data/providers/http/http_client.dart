@@ -7,3 +7,9 @@ final Client httpClientCaregiver = InterceptedClient.build(
     CaregiverInterceptor(),
   ],
 );
+
+final httpClientPatient = InterceptedClient.build(
+  interceptors: [
+    PatientInterceptor(),
+  ],
+);

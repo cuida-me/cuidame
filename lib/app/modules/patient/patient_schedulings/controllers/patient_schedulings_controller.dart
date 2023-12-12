@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cuidame/app/data/models/scheduling_day_model.dart';
 import 'package:cuidame/app/data/models/scheduling_medication_type.dart';
 import 'package:cuidame/app/data/repositories/schedulings_repository.dart';
+import 'package:cuidame/app/data/services/patient_service.dart';
 import 'package:cuidame/app/data/services/scheduling_service.dart';
 import 'package:cuidame/app/utils/utils_datetime.dart';
 import 'package:cuidame/app/utils/utils_logger.dart';
@@ -11,6 +12,7 @@ import 'package:get/get.dart';
 class PatientSchedulingsController extends GetxController {
   final SchedulesRepository _schedulesRepository;
   final SchedulingService _schedulingService;
+  final PatientService _patientService;
 
   final loading = false.obs;
 
@@ -22,7 +24,11 @@ class PatientSchedulingsController extends GetxController {
 
   Timer? _schedulingListenTimer;
 
-  PatientSchedulingsController(this._schedulesRepository, this._schedulingService) {
+  PatientSchedulingsController(
+    this._schedulesRepository,
+    this._schedulingService,
+    this._patientService,
+  ) {
     getSchedules();
   }
 
@@ -58,7 +64,7 @@ class PatientSchedulingsController extends GetxController {
 
   SchedulingModel? getScheduling(int dayWeek, String idScheduling) {
     final scheduling = schedules.value?.firstWhere((e) => e.dayWeek == dayWeek).schedulings?.firstWhere(
-          (e) => e.id == idScheduling,
+          (e) => e.id == int.parse(idScheduling),
         );
     return scheduling;
   }
