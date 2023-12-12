@@ -37,16 +37,13 @@ class _PatientSchedulingsPageState extends State<PatientSchedulingsPage> {
                 child: Gutter(
                   hidePaddingBottom: true,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       WeekPatient(schedulingDayModel: controller.schedules),
                       const SizedBox(height: Spacements.L),
-                      Expanded(
-                        child: Obx(
-                          () =>
-                              controller.isSchedulings ? ListMedications(controller: controller) : const NoMedication(),
-                        ),
+                      Obx(
+                        () => controller.isSchedulings ? ListMedications(controller: controller) : const NoMedication(),
                       ),
                     ],
                   ),

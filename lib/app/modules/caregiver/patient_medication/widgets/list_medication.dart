@@ -43,7 +43,7 @@ class ListMedication extends StatelessWidget {
           ],
         ),
         if (controller.schedulingToday != null) ...[
-          const SizedBox(height: Spacements.M),
+          const SizedBox(height: Spacements.XS),
           Expanded(
             child: SingleChildScrollView(
               child: Obx(() {

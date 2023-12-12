@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:cuidame/app/configs/constants/spacements.dart';
 import 'package:cuidame/app/configs/theme/app_color_style.dart';
@@ -123,14 +122,19 @@ class ListMedications extends StatelessWidget {
       );
     }
 
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (controller.schedulingsDelayed?.isNotEmpty ?? false) buildSchedulingsDelayed(),
-          if (controller.schedulingsCloseToTime?.isNotEmpty ?? false) buildSchedulingsCloseToTime(),
-          if (controller.schedulingsInTimeAndTaken?.isNotEmpty ?? false) buildSchedulingsInTime(),
-        ],
+    return Expanded(
+      child: RefreshIndicator(
+        onRefresh: controller.retrieveSchedulingWeek,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (controller.schedulingsDelayed?.isNotEmpty ?? false) buildSchedulingsDelayed(),
+              if (controller.schedulingsCloseToTime?.isNotEmpty ?? false) buildSchedulingsCloseToTime(),
+              if (controller.schedulingsInTimeAndTaken?.isNotEmpty ?? false) buildSchedulingsInTime(),
+            ],
+          ),
+        ),
       ),
     );
   }

@@ -9,21 +9,23 @@ class SchedulingService {
   SchedulingService(this._localNotificationService);
 
   Future scheduleMedication(SchedulingModel scheduling) async {
+    final currentDate = DateTime.now();
     final exist = await _localNotificationService.checkSchedulingExist(scheduling.id);
-    if (!exist) {
-      if (scheduling.medicationTime != null) {
-        await _localNotificationService.createScheduleNotification(
-          scheduling.id,
-          'Está na hora da medicação',
-          '${scheduling.name} - ${scheduling.quantity} ${scheduling.dosage}',
-          scheduling.medicationTime!,
-        );
-        Utils.toast(
-          'Agendado ${UtilsDateTime.timeString(scheduling.medicationTime)}',
-          '${scheduling.name} - ${scheduling.quantity} ${scheduling.dosage}',
-        );
-      }
-    }
+    if (exist) return;
+    if (scheduling.medicationTime == null) return;
+    if (scheduling.medicationTakenTime != null) return;
+    if (currentDate.isAfter(scheduling.medicationTime!)) return;
+
+    await _localNotificationService.createScheduleNotification(
+      scheduling.id,
+      'Está na hora da medicação',
+      '${scheduling.name} - ${scheduling.quantity} ${scheduling.dosage}',
+      scheduling.medicationTime!,
+    );
+    Utils.toast(
+      'Agendado ${UtilsDateTime.timeString(scheduling.medicationTime)}',
+      '${scheduling.name} - ${scheduling.quantity} ${scheduling.dosage}',
+    );
   }
 
   Future cancelAllSchedules() async {

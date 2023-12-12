@@ -128,9 +128,7 @@ class _PatientProfilePageState extends State<PatientProfilePage> {
                     dateOnly: true,
                     disableFutureDate: true,
                     initialDate: controller.patient.value?.birthDate,
-                    onChange: (value) {
-                      controller.patient.value?.birthDate = value;
-                    },
+                    onChange: controller.onChangeBirthDate,
                   ),
                 ),
                 const SizedBox(width: Spacements.S),

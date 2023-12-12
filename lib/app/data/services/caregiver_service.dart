@@ -35,6 +35,7 @@ class CaregiverService {
       getMyProfile(),
       retrieveMedicationTypes(),
       retrieveSchedulingWeek(),
+      getPatient(),
     ]);
     _loading.value = false;
   }

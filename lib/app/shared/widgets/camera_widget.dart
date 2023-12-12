@@ -50,9 +50,9 @@ class _CameraWidgetState extends State<CameraWidget> {
               simpleCamera: simpleCamera,
               onPressedTakePicture: (file) {
                 if (widget.onChange != null) {
-                    widget.onChange!(file);
-                  }
-                  Get.back();
+                  widget.onChange!(file);
+                }
+                Get.back();
               },
               onPressedGallery: () async {
                 final picker = ImagePicker();

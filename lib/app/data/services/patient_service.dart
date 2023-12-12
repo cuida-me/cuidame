@@ -63,7 +63,7 @@ class PatientService {
     await _patientRepository.retrieveSchedulingWeek().then((value) async {
       final currentDate = DateTime.now();
       _schedulingWeek.value = value;
-
+  
       _schedule.value = value.firstWhereOrNull((e) => UtilsDateTime.isSameDay(e.date, currentDate));
 
       await _schedulingService.cancelAllSchedules();

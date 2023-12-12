@@ -50,6 +50,12 @@ class PatientProfileController extends GetxController {
 
   void onChangeGender(value) {
     patient.value?.sex = value;
+    patient.refresh();
+  }
+
+  void onChangeBirthDate(value) {
+    patient.value?.birthDate = value;
+    patient.refresh();
   }
 
   void submit() {

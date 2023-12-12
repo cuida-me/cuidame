@@ -6,6 +6,8 @@ import 'package:get/get.dart';
 class PatientSchedulingsController extends GetxController {
   final PatientService _patientService;
 
+  final _loadingRefresh = false.obs;
+
   PatientSchedulingsController(
     this._patientService,
   ) {
@@ -16,11 +18,16 @@ class PatientSchedulingsController extends GetxController {
   SchedulingDayModel? get schedule => _patientService.schedule;
 
   bool get loading => _patientService.loading;
+  bool get loadingRefresh => _loadingRefresh.value;
 
   bool get isSchedulings => _patientService.isSchedulings;
 
   void medicationTaken(int dayWeek, int idScheduling) async {
     _patientService.medicationTaken(dayWeek, idScheduling);
+  }
+
+  Future retrieveSchedulingWeek() async {
+    await _patientService.retrieveSchedulingWeek();
   }
 
   // SchedulingModel? getScheduling(int dayWeek, String idScheduling) {

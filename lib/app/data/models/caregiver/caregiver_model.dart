@@ -29,7 +29,7 @@ class CaregiverModel {
     return <String, dynamic>{
       'id': id,
       'name': name,
-      'birthDate': birthDate?.millisecondsSinceEpoch,
+      'birth_date': birthDate?.toIso8601String(),
       'avatar': avatar,
       'sex': sex,
       'email': email,
@@ -42,7 +42,7 @@ class CaregiverModel {
     return CaregiverModel(
       id: map['id'] != null ? map['id'] as int : null,
       name: map['name'] != null ? map['name'] as String : null,
-      birthDate: map['birthDate'] != null ? UtilsDateTime.formatToLocal(map['birthDate'] as String) : null,
+      birthDate: map['birth_date'] != null ? UtilsDateTime.formatToLocal(map['birth_date'] as String) : null,
       avatar: map['avatar'] != null ? map['avatar'] as String : null,
       sex: map['sex'] != null ? map['sex'] as int : null,
       email: map['email'] != null ? map['email'] as String : null,
