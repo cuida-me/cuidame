@@ -1,6 +1,7 @@
 import 'package:cuidame/app/data/providers/dependences_injector.dart';
 import 'package:cuidame/app/data/repositories/caregiver_repository.dart';
 import 'package:cuidame/app/data/repositories/firebase_storage_repository.dart';
+import 'package:cuidame/app/data/repositories/patient_repository.dart';
 import 'package:cuidame/app/data/repositories/schedulings_repository.dart';
 import 'package:cuidame/app/data/services/caregiver_login_service.dart';
 
@@ -17,5 +18,9 @@ void setupRepositoryInjections() {
     () => FirebaseStorageRepositoryImpl(
       DependencesInjector.get<CaregiverLoginService>(),
     ),
+  );
+
+  DependencesInjector.registerFactory<PatientRepository>(
+    () => PatientRepositoryImpl(),
   );
 }

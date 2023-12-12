@@ -1,17 +1,34 @@
-import 'dart:math';
-
-import 'package:cuidame/app/router/routes.dart';
+import 'dart:io';
+import 'package:cuidame/app/data/models/patient/patient_qr_model.dart';
+import 'package:cuidame/app/data/services/patient_service.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:get/get.dart';
 
 class PatientQrCodeController extends GetxController {
-  final qrCodeData = RxnString();
+  final PatientService _patientService;
 
-  PatientQrCodeController() {
-    qrCodeData.value = Random().nextDouble().toString();
+  PatientQrCodeController(this._patientService) {
+    initSocketConnection();
   }
 
-  void refreshQrCode() {
-    qrCodeData.value = Random().nextDouble().toString();
-    Get.offAllNamed(Routes.patientSchedulings);
+  String? get qrCode => _patientService.qrCode;
+  bool get loading => _patientService.qrCode == null;
+
+  void initSocketConnection() async {
+    final deviceInfo = DeviceInfoPlugin();
+    String? id;
+
+    if (Platform.isAndroid) {
+      final androidInfo = await deviceInfo.androidInfo;
+      id = androidInfo.id;
+    }
+
+    _patientService.socketConnected().listen((e) {
+      _patientService.patientQrListen();
+      _patientService.patientQrConnect(PatientQrModel(deviceId: id!));
+      _patientService.patientFinishLoginListen();
+    });
   }
+
+  void refreshQrCode() {}
 }

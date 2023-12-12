@@ -60,15 +60,17 @@ class _PatientQrCodePageState extends State<PatientQrCodePage> {
                       ),
                       const SizedBox(height: Spacements.XL),
                       Obx(
-                        () => SizedBox(
-                          height: 250,
-                          width: 250,
-                          child: QrImageView(
-                            data: controller.qrCodeData.value ?? '',
-                            version: QrVersions.auto,
-                            size: 200,
-                          ),
-                        ),
+                        () => controller.loading
+                            ? const Center(child: CircularProgressIndicator())
+                            : SizedBox(
+                                height: 250,
+                                width: 250,
+                                child: QrImageView(
+                                  data: controller.qrCode ?? '',
+                                  version: QrVersions.auto,
+                                  size: 200,
+                                ),
+                              ),
                       ),
                       const SizedBox(height: Spacements.XL),
                       PrimaryButton(
