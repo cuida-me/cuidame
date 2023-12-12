@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+import 'package:cuidame/app/utils/utils_datetime.dart';
+
 class PatientUpdateModel {
   String? name;
   DateTime? birthDate;
@@ -26,7 +28,7 @@ class PatientUpdateModel {
   factory PatientUpdateModel.fromMap(Map<String, dynamic> map) {
     return PatientUpdateModel(
       name: map['name'] != null ? map['name'] as String : null,
-      birthDate: map['birth_date'] != null ? DateTime.tryParse(map['birth_date'] as String) : null,
+      birthDate: map['birth_date'] != null ? UtilsDateTime.formatToLocal(map['birth_date'] as String) : null,
       avatar: map['avatar'] != null ? map['avatar'] as String : null,
       sex: map['sex'] != null ? map['sex'] as int : null,
     );

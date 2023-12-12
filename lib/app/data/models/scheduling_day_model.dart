@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cuidame/app/data/models/scheduling_medication_type.dart';
+import 'package:cuidame/app/utils/utils_datetime.dart';
 
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class SchedulingDayModel {
@@ -39,7 +40,7 @@ class SchedulingDayModel {
       day: map['day'] as int,
       dayName: map['day_name'] as String,
       monthName: map['month_name'] as String,
-      date: map['date'] != null ? DateTime.tryParse(map['date'] as String) : null,
+      date: map['date'] != null ? UtilsDateTime.formatToLocal(map['date'] as String) : null,
       dayWeek: map['day_week'] as int,
       dayColors: map['day_colors'] != null ? List<String>.from(map['day_colors'] as List<dynamic>) : null,
       schedulings: map['schedulings'] != null
@@ -104,9 +105,11 @@ class SchedulingModel {
     return SchedulingModel(
       id: map['id'] as int,
       name: map['name'] as String,
-      medicationTime: map['medication_time'] != null ? DateTime.tryParse(map['medication_time'] as String) : null,
-      medicationTakenTime:
-          map['medication_taken_time'] != null ? DateTime.tryParse(map['medication_taken_time'] as String) : null,
+      medicationTime:
+          map['medication_time'] != null ? UtilsDateTime.formatToLocal(map['medication_time'] as String) : null,
+      medicationTakenTime: map['medication_taken_time'] != null
+          ? UtilsDateTime.formatToLocal(map['medication_taken_time'] as String)
+          : null,
       dosage: map['dosage'] as String,
       quantity: map['quantity'] as int,
       status: map['status'] as String,

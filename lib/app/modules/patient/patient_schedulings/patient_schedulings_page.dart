@@ -23,7 +23,7 @@ class _PatientSchedulingsPageState extends State<PatientSchedulingsPage> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => !controller.loading.value
+      () => !controller.loading
           ? Scaffold(
               backgroundColor: AppColors.light,
               appBar: PatientAppBar(
@@ -40,7 +40,7 @@ class _PatientSchedulingsPageState extends State<PatientSchedulingsPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      WeekPatient(schedulingDayModel: controller.schedules.value),
+                      WeekPatient(schedulingDayModel: controller.schedules),
                       const SizedBox(height: Spacements.L),
                       Expanded(
                         child: Obx(

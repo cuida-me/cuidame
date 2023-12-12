@@ -47,7 +47,7 @@ class PatientAppBar extends StatelessWidget implements PreferredSize {
                     style: Theme.of(context).textTheme.titleLarge,
                     children: [
                       TextSpan(
-                        text: patientService.user,
+                        text: patientService.user?.name,
                         style: Theme.of(context).textTheme.titleLarge!.copyWith(
                               fontWeight: FontWeight.bold,
                             ),

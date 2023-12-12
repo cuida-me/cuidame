@@ -42,7 +42,7 @@ void setupServiceInjection() {
   DependencesInjector.registerLazySingleton<PatientService>(
     () => PatientService(
       DependencesInjector.get<PatientRepository>(),
-      DependencesInjector.get<PatientTokenStorage>(),
+      DependencesInjector.get<SchedulingService>(),
     ),
   );
 }

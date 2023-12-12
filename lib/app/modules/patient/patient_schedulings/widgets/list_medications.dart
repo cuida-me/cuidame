@@ -34,7 +34,7 @@ class ListMedications extends StatelessWidget {
               return MedicationCard(
                 onTap: () {
                   controller.medicationTaken(
-                    controller.schedule.value!.dayWeek,
+                    controller.schedule!.dayWeek,
                     scheduling.id,
                   );
                 },
@@ -70,7 +70,7 @@ class ListMedications extends StatelessWidget {
               return MedicationCard(
                 onTap: () {
                   controller.medicationTaken(
-                    controller.schedule.value!.dayWeek,
+                    controller.schedule!.dayWeek,
                     scheduling.id,
                   );
                 },
@@ -106,7 +106,7 @@ class ListMedications extends StatelessWidget {
               return MedicationCard(
                 onTap: () {
                   controller.medicationTaken(
-                    controller.schedule.value!.dayWeek,
+                    controller.schedule!.dayWeek,
                     scheduling.id,
                   );
                 },

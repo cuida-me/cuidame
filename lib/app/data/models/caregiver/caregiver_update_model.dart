@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:cuidame/app/utils/utils_datetime.dart';
+
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class CaregiverUpdateModel {
   String? name;
@@ -27,7 +29,7 @@ class CaregiverUpdateModel {
     return CaregiverUpdateModel(
       name: map['name'] != null ? map['name'] as String : null,
       avatar: map['avatar'] != null ? map['avatar'] as String : null,
-      birthDate: map['birth_date'] != null ? DateTime.tryParse(map['birth_date']) : null,
+      birthDate: map['birth_date'] != null ? UtilsDateTime.formatToLocal(map['birth_date']) : null,
       sex: map['sex'] != null ? map['sex'] as int : null,
     );
   }
