@@ -58,6 +58,7 @@ class ListMedication extends StatelessWidget {
                       borderColor: HexColor.fromHex(scheduling.color),
                       onTap: () {
                         // Edit
+                        Get.toNamed(Routes.addMedication, arguments: {'scheduling': scheduling.toJson()});
                       },
                     );
                   },

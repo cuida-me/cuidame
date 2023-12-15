@@ -63,6 +63,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '562142309292',
     projectId: 'cuidame-67f4d',
     storageBucket: 'cuidame-67f4d.appspot.com',
+    iosClientId: '562142309292-h5gqkijoj1h84m8losb1holrqo45ei9i.apps.googleusercontent.com',
     iosBundleId: 'com.cuidame.cuidame',
   );
 }

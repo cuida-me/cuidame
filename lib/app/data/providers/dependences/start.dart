@@ -16,7 +16,9 @@ void setupStartInjections() {
   );
 
   DependencesInjector.registerFactory<StartController>(
-    () => StartController(),
+    () => StartController(
+      DependencesInjector.get<CaregiverRepository>(),
+    ),
   );
 
   DependencesInjector.registerFactory<SignInController>(

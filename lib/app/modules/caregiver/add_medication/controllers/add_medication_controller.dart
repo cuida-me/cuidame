@@ -2,6 +2,7 @@ import 'package:cuidame/app/configs/constants/toast_type.dart';
 import 'package:cuidame/app/data/models/medication/medication_create_model.dart';
 import 'package:cuidame/app/data/models/medication/medication_type_model.dart';
 import 'package:cuidame/app/data/models/scheduling/schedule_selected_model.dart';
+import 'package:cuidame/app/data/models/scheduling_day_model.dart';
 import 'package:cuidame/app/data/repositories/firebase_storage_repository.dart';
 import 'package:cuidame/app/data/services/caregiver_service.dart';
 import 'package:cuidame/app/utils/utils.dart';
@@ -13,6 +14,8 @@ import 'package:image_picker/image_picker.dart';
 class AddMedicationController extends GetxController {
   final CaregiverService _caregiverService;
   final FirebaseStorageRepository _firebaseStorageRepository;
+
+  final _scheduling = Rxn<SchedulingModel>();
 
   final medicationPhoto = RxnString();
   final medicationName = RxnString();
@@ -34,7 +37,17 @@ class AddMedicationController extends GetxController {
   final loading = false.obs;
   final loadingMedicationPhoto = false.obs;
 
-  AddMedicationController(this._caregiverService, this._firebaseStorageRepository);
+  AddMedicationController(this._caregiverService, this._firebaseStorageRepository) {
+    _scheduling.value = SchedulingModel.fromJson(Get.arguments['scheduling']);
+
+    medicationPhoto.value = scheduling?.image;
+    medicationName.value = scheduling?.name;
+    dosage.value = scheduling?.dosage;
+    dosageType.value = medicationTypes?.firstWhere((e) => e.name == scheduling?.medicationType).id;
+    timeSchedulers.value = [];
+  }
+
+  SchedulingModel? get scheduling => _scheduling.value;
 
   bool get formValidate {
     if (medicationName.value == null ||
@@ -117,5 +130,23 @@ class AddMedicationController extends GetxController {
     }).catchError((err) {
       UtilsLogger().e(err);
     }).whenComplete(() => loading.value = false);
+  }
+
+  void edit() {
+    var schedules = daysSelected.value
+        .map((e) => MedicationCreateDailySelectedModel(
+              dailyOfWeek: e.dailyOfWeek,
+              enabled: e.enabled,
+            ))
+        .toList();
+
+    var medication = MedicationCreateModel(
+      name: medicationName.value,
+      typeId: dosageType.value,
+      avatar: medicationPhoto.value,
+      quantity: int.parse(dosage.value ?? '0'),
+      times: timeSchedulers.value.map((e) => '${e.hour}:${e.minute}').toList(),
+      schedules: schedules,
+    );
   }
 }

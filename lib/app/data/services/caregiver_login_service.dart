@@ -6,6 +6,7 @@ import 'package:cuidame/app/utils/utils_logger.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class CaregiverLoginService {
   // ignore: unused_field
@@ -61,7 +62,8 @@ class CaregiverLoginService {
     });
   }
 
-  signOut() {
-    FirebaseAuth.instance.signOut();
+  signOut() async {
+    await GoogleSignIn().disconnect();
+    await FirebaseAuth.instance.signOut();
   }
 }

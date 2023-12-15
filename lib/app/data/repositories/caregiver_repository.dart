@@ -31,6 +31,9 @@ class CaregiverRepositoryImpl implements CaregiverRepository {
   @override
   Future<bool> registerCaregiver() async {
     final res = await httpClientCaregiver.post(Uri.https(Utils.apiUrlBase, '/caregiver'));
+
+    if (jsonDecode(res.body)['message'] == 'email already exists') return true;
+
     return res.statusCode == 201;
   }
 

@@ -66,21 +66,25 @@ class _StartPageState extends State<StartPage> {
                           const SizedBox(height: Spacements.XL),
                           Row(
                             children: [
-                              TextButton(
-                                style: TextButton.styleFrom(
-                                  shadowColor: AppColors.black,
-                                  backgroundColor: AppColors.lightGray,
-                                  elevation: 2,
-                                  shape: const CircleBorder(),
-                                ),
-                                onPressed: () {},
-                                child: const Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    vertical: Spacements.XS,
-                                    horizontal: Spacements.XS,
+                              Obx(
+                                () => TextButton(
+                                  style: TextButton.styleFrom(
+                                    shadowColor: AppColors.black,
+                                    backgroundColor: AppColors.lightGray,
+                                    elevation: 2,
+                                    shape: const CircleBorder(),
                                   ),
-                                  child: Image(
-                                    image: AssetImage(AppAssets.googleIcon),
+                                  onPressed: controller.signInGoogle,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: Spacements.XS,
+                                      horizontal: Spacements.XS,
+                                    ),
+                                    child: !controller.loadingSignInGoogle.value
+                                        ? const Image(
+                                            image: AssetImage(AppAssets.googleIcon),
+                                          )
+                                        : const CircularProgressIndicator(),
                                   ),
                                 ),
                               ),

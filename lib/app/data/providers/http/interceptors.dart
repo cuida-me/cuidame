@@ -34,9 +34,11 @@ class CaregiverInterceptor extends InterceptorContract {
       _caregiverLoginService.signOut();
     }
 
-    if (response.statusCode == 400) {
+    if (response.statusCode == 400 || response.statusCode >= 500) {
+      UtilsLogger().e(response.reasonPhrase);
       throw Exception(response.reasonPhrase);
     }
+
     return response;
   }
 }
@@ -69,9 +71,11 @@ class PatientInterceptor extends InterceptorContract {
       _patientLoginService.signOut();
     }
 
-    if (response.statusCode == 400) {
+    if (response.statusCode == 400 || response.statusCode >= 500) {
+      UtilsLogger().e(response.reasonPhrase);
       throw Exception(response.reasonPhrase);
     }
+
     return response;
   }
 }
